@@ -1,0 +1,18 @@
+## Ignore certain files/directories from Github language stats
+
+# linguist-documentation
+docs/* linguist-documentation
+
+# linguist-language
+
+# linguist-vendored
+public_html/css/* language-vendored=false
+public_html/css/vendor/* linguist-vendored
+public_html/js/* language-vendored=false
+public_html/js/vendor/* linguist-vendored
+public_html/images/* language-vendored=false
+public_html/images/vendor/* linguist-vendored
+
+# linguist-generated
+
+# linguist-detectable
