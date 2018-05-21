@@ -1,0 +1,284 @@
+body
+{
+     background-image: url(images/back.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    
+    
+}
+
+
+
+body p
+{
+    font-size: 0.8em;
+    line-height: 1.28;
+}
+.container a:hover, .dropdown:hover .dropbtn {
+    background-color: white;
+}
+
+
+#wrapper
+{
+    width: 1080px;
+    background-color: white;
+    margin: 0 auto;
+    padding: 10px;
+    border: 5px solid #dedede;
+}
+
+#banner
+{
+   // background-image: url(images/banner.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 5px solid #dedede;    
+    height: 400px;
+}
+
+#content_area
+{
+    float: left;
+    width: 750px;
+    margin: 20px 0 20px 0;
+    padding: 10px;
+}
+
+
+#sidebar
+{
+    float: left;
+    width: 500px;
+    height: 550px;
+    margin: 20px 10px;
+    padding: 60px;
+    border: 10px solid #ffcc00;
+    background-color: white;
+    
+}
+#aboutsidebar
+{
+    
+    width: 1000px;
+    height: 400px;
+    margin: 20px 10px;
+    padding: 60px;
+    border: 20px solid #ffcc00;
+    background-color: white;
+    opacity: 0.8;
+        
+    
+}
+#log
+{
+   
+   
+    width: 500px;
+    height: 400px;
+    margin: 20px 10px;
+    padding: 60px;
+    border: 20px solid #ffcc00;
+    background-color: transparent;
+   
+   
+    
+}
+#reg
+{
+    width: 600px;
+    height: 600px;
+    margin: 20px 10px;
+    padding: 60px;
+    border: 20px solid #ffcc00;
+    background-color: transparent;
+    
+ 
+}
+.container {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial;
+    
+}
+
+.container a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+footer
+{
+    clear: both;
+    width: auto;
+    height: 40px;
+    padding: 10px;
+    border: 3px solid #E3E3E3;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0.1em 0.1em #333;
+  background-color: transparent;
+}
+
+
+
+
+
+
+
+.imgLeft
+{
+    float: left;
+    width: 240px;
+    height: 150px;
+    margin: 0px 10px 10px 0;
+    padding: 10px;
+}
+
+.imgRight
+{
+    float: right;
+    width: 200px;
+    height: 250px;
+    margin: 0px 0 10px 10px;
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+ul {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+li {
+    float: left;
+    border-right:1px solid #bbb;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+  background-color: white;
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+h1 {
+    color: #ffcc00;
+}
+h3 {
+    color: #ffcc00;
+}
+h2 {
+    color: white;
+    
+}
+h4 {
+    color: white;
+    
+}
+.button {
+    background-color: #ffcc00; /* Green */
+    border: #ffcc00;
+    color: #ffcc00;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.SubButton {
+    background-color: #ffcc00;
+    color: white;
+    border: 3px solid #ffcc00;
+    font-weight: bold;
+   
+}
+.styled-select.slate {
+   background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+   height: 34px;
+   width: 240px;
+   background-color: white;
+   
+   
+   
+   
+}
