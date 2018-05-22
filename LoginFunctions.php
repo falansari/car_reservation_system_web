@@ -2,7 +2,7 @@
 include_once 'mysqli_connect.php';
 //include_once 'debugging.php';
 
-function absolute_url($page = 'Index.php')
+function absolute_url($page = 'index.php')
 {
     //header('Location: http:\\localhost');
     //exit(); //terminates the script

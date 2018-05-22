@@ -10,18 +10,19 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <?php
-        include 'Header.php';
-        ?>
-        
+
+<?php
+include_once 'Header.php';
+?>
+
         <div id="sidebar">
-            
-            
-                <center><h1>Book Your Car Today!</h1></center> 
+
+
+                <center><h1>Book Your Car Today!</h1></center>
 <form action="index.php" method="post">
-    
-    
-     
+
+
+
     <h4>Car manufacturer :</h4><select class="styled-select slate">
   <option value="1">Select One:</option>
   <option value="volvo">Any</option>
@@ -29,7 +30,7 @@ and open the template in the editor.
   <option value="opel">Truck</option>
   <option value="audi">Hybrid</option>
 </select>
-    
+
     <h4>Car Category :</h4><select class="styled-select slate">
   <option value="1">Select One:</option>
   <option value="volvo">Volvo</option>
@@ -37,14 +38,14 @@ and open the template in the editor.
   <option value="opel">Opel</option>
   <option value="audi">Audi</option>
 </select>
-      
-    <center><input type ="submit" class ="button SubButton" value ="Search" /> 
-             
+
+    <center><input type ="submit" class ="button SubButton" value ="Search" />
+
             <input type="hidden" name="submitted" value="1" />
-     
-     </center>       
-</form>    
-          </div>      
-            
+
+     </center>
+</form>
+          </div>
+
     </body>
 </html>

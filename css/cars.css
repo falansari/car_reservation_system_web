@@ -1,6 +1,6 @@
 body
 {
-     background-image: url(images/back.jpg);
+     background-image: url(../images/back.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
     
@@ -30,7 +30,7 @@ body p
 
 #banner
 {
-   // background-image: url(images/banner.jpg);
+    background-image: url(../images/banner.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     border: 5px solid #dedede;    

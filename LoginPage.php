@@ -16,7 +16,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        include 'Header.php';
+        include_once 'Header.php';
         ?>
      
     <center>
