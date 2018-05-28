@@ -16,24 +16,18 @@ include_once 'Header.php';
             
         <tr><td><h4>First Name :</h4><td> <input type="text" name="firstName" size="20" value="" /> 
     
+                 <tr><td><h4>middle Name : </h4><td><input type="text" name="middleName" size="20" value="" />
      <tr><td><h4>Last Name : </h4><td><input type="text" name="lastName" size="20" value="" />
      
-     <tr><td><h4>CPR Number : </h4><td><input type="text" name="password" size="10" value="" />
-            
+   
                 
     <tr><td><h4>Email : </h4><td><input type="email" name="email" size="50" value="" />
       
     <tr><td><h4>Password : </h4><td><input type="password" name="password" size="10" value="" />
             
-    <tr><td><h4>Confirm Password : </h4><td><input type="password" name="password" size="10" value="" />
+   
                
                 
-    
-    <tr><td><h4>Card Number :</h4> <td><input type="text" name="CardNum" size="50" value="" />
-    
-    <tr><td><h4>Card Name :</h4><td> <input type="text" name="CardName" size="50" value="" />
-    
-    <tr><td> <h4>Expiry Date : </h4><td> <input type="month" name="Exdate" size="50" value="" /></td></tr>
         </table>        
                
             <div align="center">
@@ -48,7 +42,31 @@ include_once 'Header.php';
         </center>
 <?php
 
+    if( isset($_POST['submitted']) )
+{
+    include_once 'Users.php';       
+         
+    $user = new Users();
     
+    
+    $user->setFirstname($_POST['firstName']);
+    $user->setMiddlename($_POST['middleName']);
+    $user->setLastname($_POST['lastName']);
+    $user->setEmail($_POST['email']);
+    $user->setPassword($_POST['password']);
+            
+    
+    
+   if ($user->initWithemail()) {
+
+        if ($user->registerUser())
+            echo 'Registerd Successfully';
+        else
+            echo '<p class="error"> Not Successfull </p>';
+    }else {
+        echo '<p class="error"> Username Already Exists </p>';
+    }
+}
    
     
 
