@@ -9,7 +9,7 @@
     <ul >
         <li><a  href="index.php"><i class="fa fa-home"> Home</i></a></li>
         <li><a href="About.php"> About Us</a></li>
-  <li><a href="#">Contact Us</a></li>
+        <li><a href="AdminHome.php">Contact Us</a></li>
   <li style="float:right"><a href="LoginPage.php"><span class="fas fa-sign-in-alt"> Login</span></a></li>
   <li style="float:right"><a href="Register.php"><i class="fas fa-user-plus"> Register</i></a></li>
   
