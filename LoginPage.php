@@ -17,6 +17,7 @@ and open the template in the editor.
     <body>
         <?php
         include_once 'Header.php';
+        include_once 'Login.php';
         ?>
      
     <center>
@@ -26,8 +27,8 @@ and open the template in the editor.
                 <center><h1>Please Enter Your Login Details </h1></center> 
         <form action="LoginPage.php" method="post" id="content">
         <fieldset>    
-            <h3>CPR/Email : <input type="text" name="UserName" value="" />
-            <h3>Password : <input type="password" name="Password" value=""/>
+            <h4>Email : <input type="email" name="email" value="" />
+            <h4>Password : <input type="password" name="Password" value=""/>
         <br><br>
         <input  type="submit" class ="button SubButton" name="submit" value="Login" /> 
             
@@ -35,7 +36,9 @@ and open the template in the editor.
         
         
          <input type ="hidden" name="submitted" value="1">
-                 </fieldset>    
+                 </fieldset> 
+            
+            
 
 </form>
         </div>
@@ -45,15 +48,13 @@ and open the template in the editor.
 
 
 <?php
-
-
 if (isset($_POST['submitted'])) {
     //require_once is similar to 'include' but ensures the code is not copied multiple times
     require_once('LoginFunctions.php');
 
     //list() is a way of assigning multiple values at the same time
     //checkLogin() function returns an array so list here assigns the values in the array to $check and $data 
-     $usern = $_POST['UserName'];
+     $usern = $_POST['email'];
    $pass = $_POST['Password'];
        
     
@@ -61,15 +62,44 @@ if (isset($_POST['submitted'])) {
     
    list($check, $data) = checkLogin($usern, $pass);
    if ($check) {
-        
-        $_SESSION['UserName'] =$usern;
-        $_SESSION['Id'] = $data['user_id'];
-     
        
-            
-        }else {
-        $errors = $data;
-    }
+        $_SESSION['email'] =$usern;
+        $_SESSION['Id'] = $data['id'];
+        $id = $_SESSION['Id'] ;
+        
+        require_once 'mysqli_connect.php';
+////set up database econnection
+     
+         
+      $db = new Database1();
+      $dbc = $db->getConnection();
+        
+        
+      $qq = "SELECT role_id FROM user_roles where user_id = $id ";
+      echo "$qq";
+
+      $rr = mysqli_query($dbc, $qq);
+                
+      if($rr)
+      {
+           while ($row = mysqli_fetch_array($rr)){
+                
+                    $role = $row[0];
+                    if ($role !=2){
+                  $url = absolute_url('AdminHome.php');  
+        header("Location: $url");
+        exit(); 
+      }
+      else{
+          $url = absolute_url('index.php');  
+        header("Location: $url");
+        exit(); 
+      }
+      
+          }
+      
+        }
+   }
 }
 
 //create a sopace between the button and the error messages
@@ -85,5 +115,3 @@ if (!empty($errors)) {
 
     echo '</p>';
 }
-    
-    

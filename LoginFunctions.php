@@ -14,12 +14,12 @@ function absolute_url($page = 'index.php')
     return $url;
 }
 
-function checkLogin($username, $password) 
+function checkLogin($email, $password) 
 {
   $errors = array();
     
-  if(empty($username))
-    $errors[] = 'You must enter User name';
+  if(empty($email))
+    $errors[] = 'You must enter email';
  
   if(empty($password))
     $errors[] = 'You must enter a password';
@@ -30,15 +30,16 @@ function checkLogin($username, $password)
 ////set up database econnection
      
          
-      $db = new Database();
+      $db = new Database1();
       $dbc = $db->getConnection();
 
-      $q = "SELECT * FROM articleusers where user_name = '$username' and user_pass= '$password'";
+      $q = "SELECT * FROM users where email = '$email' and password= '$password'";
 
       $r = mysqli_query($dbc, $q);
                 
       if($r)
       {
+          
           
           if(mysqli_affected_rows($dbc) != 0)
           {
