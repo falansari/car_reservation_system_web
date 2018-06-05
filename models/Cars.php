@@ -274,23 +274,23 @@ class Cars
                 AND cr.id = rc.reservation_id
                 AND c.id = rc.car_id";
 
-            if ($manufacturer != null) {
+            if (!empty($manufacturer)) {
                 $sql .= " AND r.`id` = '$manufacturer'";
             }
 
-            if ($model != null) {
+            if (!empty($model)) {
                 $sql .= " AND m.id = '$model'";
             }
 
-            if ($year != null) {
+            if (!empty($year)) {
                 $sql .= " AND y.id = '$year'";
             }
 
-            if ($category != null) {
+            if (!empty($category)) {
                 $sql .= " AND t.id = '$category'";
             }
 
-            if ($minPrice && $maxPrice != null) {
+            if (!empty($minPrice) && !empty($maxPrice)) {
                 $sql .= " AND c.daily_rental_price BETWEEN " . $minPrice . " AND " . $maxPrice . "";
             }
 
@@ -310,6 +310,28 @@ class Cars
             echo 'Exception: ' . $exception;
             return false;
         }
+    }
+
+    /**
+     * Retrieve from db cheapest car daily price.
+     */
+    public function minPrice()
+    {
+        $db = Database::getInstance();
+        $data = $db->singleFetch("SELECT MIN(cars.daily_rental_price) AS minPrice FROM cars");
+        $data = (int) $data->minPrice;
+        return $data;
+    }
+
+    /**
+     * Retrieve from db highest car daily price.
+     */
+    public function maxPrice()
+    {
+        $db = Database::getInstance();
+        $data = $db->singleFetch("SELECT MAX(cars.daily_rental_price) AS maxPrice FROM cars");
+        $data = (int) $data->maxPrice;
+        return $data;
     }
 
 }
