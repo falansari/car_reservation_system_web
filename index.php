@@ -10,22 +10,22 @@ require_once 'Header.php';
 /*** MANUFACTURER ***/
 require_once 'models/Manufacturers.php';
 $manufacturers = new Manufacturers();
-$manufacturersList = $manufacturers->list();
+$manufacturersList = $manufacturers->listAll();
 
 /*** CATEGORY ***/
 require_once 'models/Categories.php';
 $categories = new Categories();
-$categoriesList = $categories->list();
+$categoriesList = $categories->listAll();
 
 /*** MODEL ***/
 require_once 'models/Models.php';
 $models = new Models();
-$modelsList = $models->list();
+$modelsList = $models->listAll();
 
 /*** MAKE YEARS ***/
 require_once 'models/Years.php';
 $years = new Years();
-$yearsList = $years->list();
+$yearsList = $years->listAll();
 
 /*** PRICE RANGE ***/
 require_once 'models/Cars.php';

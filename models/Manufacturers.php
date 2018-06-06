@@ -116,7 +116,7 @@ class Manufacturers
     /**
      * Retrieve all manufacturers from database where an associated car exists.
      */
-    public function list()
+    public function listAll()
     {
         $db = Database::getInstance();
         $sql = 'SELECT manufacturers.id, manufacturers.manufacturer

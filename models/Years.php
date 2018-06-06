@@ -114,7 +114,7 @@ class Years
     /**
      * Retrieve all make years with available associated cars from db.
      */
-    function list()
+    function listAll()
     {
         $db = Database::getInstance();
         $sql = "SELECT make_years.id, make_years.year\n"

@@ -114,7 +114,7 @@ class Categories
     /**
      * Retrieve all car categories from database.
      */
-    function list()
+    function listAll()
     {
         $db = Database::getInstance();
         $sql = "SELECT car_categories.id, car_categories.category

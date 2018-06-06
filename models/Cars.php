@@ -224,7 +224,7 @@ class Cars
     /**
      * Retrieve all cars from database
      */
-    function list() {
+    function listAll() {
         $db = Database::getInstance();
         $data = $db->multiFetch('SELECT * FROM cars');
         return $data;
