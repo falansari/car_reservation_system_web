@@ -21,7 +21,7 @@ Class Login extends Users {
 
     function check_session() {
 
-        if (!empty($_SESSION['uid'])) {
+        if (!empty($_SESSION['id'])) {
             $this->ok = true;
             return true;
         }

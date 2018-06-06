@@ -1,4 +1,13 @@
+<?php
 
+
+session_start();
+if (!isset($_SESSION["role"]))
+   $_SESSION["role"] = 0;
+
+ 
+print_r($_SESSION["role"]);
+?>
 </head>
 <link rel="stylesheet" type="text/css" href="css/cars.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">

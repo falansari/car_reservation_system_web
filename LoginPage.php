@@ -86,11 +86,14 @@ if (isset($_POST['submitted'])) {
                 
                     $role = $row[0];
                     if ($role !=2){
-                  $url = absolute_url('AdminHome.php');  
+                        $_SESSION["role"] =1;
+                  $url = absolute_url('AdminHome.php'); 
+                  
         header("Location: $url");
         exit(); 
       }
       else{
+          $_SESSION["role"] = 2;
           $url = absolute_url('index.php');  
         header("Location: $url");
         exit(); 

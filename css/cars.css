@@ -106,6 +106,32 @@ body
      background-color: #f2f2f2;
  
 }
+<<<<<<< HEAD
+
+#adminalter
+{
+    width: 600px;
+    height: 575px;
+    margin: 20px 10px;
+    padding: 60px;
+    border: 10px solid #1f1f7a;
+     background-color: #f2f2f2;
+ 
+}
+
+#edit
+{
+    width: 600px;
+    height: 400px;
+    margin: 20px 10px;
+    padding: 60px;
+    border: 10px solid #1f1f7a;
+     background-color: #f2f2f2;
+ 
+}
+
+=======
+>>>>>>> master
 .container {
     overflow: hidden;
     background-color: #333;
@@ -252,20 +278,25 @@ h1 {
     color: #1f1f7a;
 }
 h3 {
-    color: #ffcc00;
+    color: #1f1f7a;
 }
 h2 {
-    color: white;
+    color: #1f1f7a;
     
 }
 h4 {
     color: #1f1f7a;
+<<<<<<< HEAD
+    font-size: 16px;
+=======
     
 }
 h4 {
     font-size: 16px;
     
+>>>>>>> master
 }
+
 .button {
     background-color: #ffcc00; /* Green */
     border: #ffcc00;
@@ -292,6 +323,16 @@ h4 {
 .AdButton {
      padding: 16px 32px;
     text-align: center;
+<<<<<<< HEAD
+    
+    display: inline-block;
+    font-size: 16px;
+    color: white;
+   background-color: #1f1f7a;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 400px;
+=======
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
@@ -304,6 +345,7 @@ h4 {
     
     
     
+>>>>>>> master
    
 }
 .buttonback {

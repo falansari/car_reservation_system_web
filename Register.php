@@ -48,5 +48,3 @@ if (isset($_POST['submitted'])) {
         echo '<p class="error"> Username Already Exists. </p>';
     }
 }
-
-?>
