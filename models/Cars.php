@@ -248,17 +248,19 @@ class Cars
 
     /**
      * Car search query builder. Changes search query based on user's search criteria.
-     * @param DATE      $startDate      required
-     * @param DATE      $endDate        required
-     * @param ID        $manufacturer   optional
-     * @param ID        $model          optional
-     * @param ID        $year           optional
-     * @param ID        $category       optional
-     * @param NUMBER    $minPrice       optional
-     * @param NUMBER    $maxPrice       optional
+     * @param INT       $start          optional. For pagination. Retrieve records that start at this row number.
+     * @param INT       $display        optional. For pagination. Retrieve this number of records.
+     * @param DATE      $startDate      required. Booking start date.
+     * @param DATE      $endDate        required. Booking end date.
+     * @param ID        $manufacturer   optional. Car manufacturer's database id.
+     * @param ID        $model          optional. Car model's database id.
+     * @param ID        $year           optional. Car make year's database id.
+     * @param ID        $category       optional. Car category's database id.
+     * @param NUMBER    $minPrice       optional. Cars' daily price minimum allowed.
+     * @param NUMBER    $maxPrice       optional. Cars' daily price maximum allowed.
      */
-    public function searchCarsQueryBuilder($startDate, $endDate, $manufacturer = null, $model = null, $year = null, $category = null,
-        $minPrice = null, $maxPrice = null) {
+    public function searchCarsQueryBuilder($start = null, $display = null, $startDate, $endDate, $manufacturer = null, 
+    $model = null, $year = null, $category = null, $minPrice = null, $maxPrice = null) {
         try {
 
             $db = Database::getInstance();
@@ -271,8 +273,8 @@ class Cars
                 AND c.model_id = m.id
                 AND c.make_year_id = y.id
                 AND c.category_id = t.id
-                AND cr.id = rc.reservation_id
-                AND c.id = rc.car_id";
+                AND cr.id = rc.reservation_id OR rc.reservation_id = NULL
+                AND c.id = rc.car_id OR rc.car_id = NULL";
 
             if (!empty($manufacturer)) {
                 $sql .= " AND r.`id` = '$manufacturer'";
@@ -296,8 +298,12 @@ class Cars
 
             $sql .= " AND '$startDate' NOT BETWEEN cr.start_date AND cr.end_date
                     AND '$endDate' NOT BETWEEN cr.start_date AND cr.end_date
-                    GROUP BY c.id
-                    LIMIT 10";
+                    GROUP BY c.id";
+            
+            if (!empty($start) && !empty($display))
+            {
+                $sql .= " LIMIT $start, $display";
+            }
 
             $data = $db->multiFetch($sql);
             return $data;

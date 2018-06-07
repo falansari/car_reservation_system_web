@@ -1,0 +1,21 @@
+table, th, td {
+    border-bottom: 1px solid darkgray;
+    border-collapse: collapse;
+    vertical-align: center;
+}
+table {
+    width: 50%;
+}
+th, td {
+    text-align: center;
+    height: 50px;
+}
+th:hover, td:hover {
+    text-decoration: underline;
+}
+tr:hover {
+    background-color: #f9f9f9;
+}
+.overflow {
+    overflow-x: auto;
+}
