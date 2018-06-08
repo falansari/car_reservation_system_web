@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2018 at 03:34 PM
+-- Generation Time: Jun 08, 2018 at 11:44 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -75,13 +75,14 @@ DELIMITER ;
 --
 -- Table structure for table `accessories`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 08, 2018 at 09:40 AM
 --
 
 DROP TABLE IF EXISTS `accessories`;
 CREATE TABLE `accessories` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `accessory` varchar(20) COLLATE latin1_general_ci NOT NULL COMMENT 'e.g. child seat, GPS',
+  `daily_rental_price` decimal(6,3) NOT NULL,
   `available_qty` int(11) NOT NULL,
   `reserved_qty` int(11) NOT NULL COMMENT 'quantities used in ongoing reservations',
   `total_qty` int(11) NOT NULL,
@@ -102,25 +103,25 @@ TRUNCATE TABLE `accessories`;
 -- Dumping data for table `accessories`
 --
 
-INSERT INTO `accessories` (`id`, `accessory`, `available_qty`, `reserved_qty`, `total_qty`, `created_at`, `updated_at`) VALUES
-(1, 'Infant Car Seat', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'Child Car Seat', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 'Booster Car Seat', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(4, 'Screen', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 'Car GPS System', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(6, 'Ski Racks', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(7, 'Snow Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(8, 'Winter Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(9, 'Summer Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 'All-Terrain Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(11, 'Car Insurance', 100, 0, 100, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `accessories` (`id`, `accessory`, `daily_rental_price`, `available_qty`, `reserved_qty`, `total_qty`, `created_at`, `updated_at`) VALUES
+(1, 'Infant Car Seat', '1.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:41:30'),
+(2, 'Child Car Seat', '1.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:41:39'),
+(3, 'Booster Car Seat', '1.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:41:48'),
+(4, 'Screen', '1.000', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:42:05'),
+(5, 'Car GPS System', '3.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:42:19'),
+(6, 'Ski Racks', '4.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:42:54'),
+(7, 'Snow Tires', '4.000', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:42:39'),
+(8, 'Winter Tires', '4.000', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:42:46'),
+(9, 'Summer Tires', '2.500', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:43:05'),
+(10, 'All-Terrain Tires', '3.000', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:43:15'),
+(11, 'Car Insurance', '2.000', 100, 0, 100, CURRENT_TIMESTAMP, '2018-06-08 09:43:27');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `card_providers`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `card_providers`;
@@ -154,7 +155,7 @@ INSERT INTO `card_providers` (`id`, `card_provider`, `created_at`, `updated_at`)
 --
 -- Table structure for table `cars`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 02:25 PM
 --
 
 DROP TABLE IF EXISTS `cars`;
@@ -165,7 +166,7 @@ CREATE TABLE `cars` (
   `make_year_id` smallint(5) UNSIGNED NOT NULL,
   `category_id` tinyint(3) UNSIGNED NOT NULL,
   `daily_rental_price` decimal(6,3) NOT NULL,
-  `image` blob NOT NULL,
+  `image` blob,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
@@ -188,6 +189,10 @@ CREATE TABLE `cars` (
 
 TRUNCATE TABLE `cars`;
 --
+-- Dumping data for table `cars`
+--
+
+--
 -- Triggers `cars`
 --
 DROP TRIGGER IF EXISTS `trig_delete_existing_car_total_reservations_count`;
@@ -203,7 +208,7 @@ DELIMITER ;
 --
 -- Table structure for table `car_categories`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `car_categories`;
@@ -247,7 +252,7 @@ INSERT INTO `car_categories` (`id`, `category`, `created_at`, `updated_at`) VALU
 --
 -- Table structure for table `countries`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `countries`;
@@ -529,7 +534,7 @@ INSERT INTO `countries` (`id`, `country_code`, `country_name_en`, `country_natio
 --
 -- Table structure for table `make_years`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `make_years`;
@@ -590,7 +595,7 @@ INSERT INTO `make_years` (`id`, `year`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `manufacturers`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `manufacturers`;
@@ -626,52 +631,31 @@ INSERT INTO `manufacturers` (`id`, `manufacturer`, `created_at`, `updated_at`) V
 (9, 'Cadillac', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (10, 'Chevrolet', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (11, 'Chrysler', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(12, 'Citroen', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(13, 'Dodge', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(14, 'Ferrari', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(15, 'Fiat', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(16, 'Ford', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(17, 'Geely', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(18, 'General Motors', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(19, 'GMC', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(20, 'Honda', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(21, 'Hyundai', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(22, 'Infiniti', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(23, 'Jaguar', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(24, 'Jeep', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(25, 'Kia', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(26, 'Koenigsegg', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(27, 'Lamborghini', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(28, 'Land Rover', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(29, 'Lexus', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(30, 'Maserati', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(31, 'Mazda', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(32, 'McLaren', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(33, 'Mercedes-Benz', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(34, 'Mini', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(35, 'Mitsubishi', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(36, 'Pagani', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(37, 'Peugeot', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(38, 'Porsche', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(39, 'Nissan', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(40, 'Ram', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(41, 'Renault', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(42, 'Rolls Royce', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(43, 'Saab', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(44, 'Subaru', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(45, 'Suzuki', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(46, 'Tata Motors', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(47, 'Tesla', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(48, 'Toyota', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(49, 'Volkswagen', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(50, 'Volvo', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+(12, 'Dodge', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(13, 'Ford', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(14, 'GMC', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(15, 'Honda', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(16, 'Hyundai', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(17, 'Infiniti', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(18, 'Jeep', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(19, 'Kia', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(20, 'Lexus', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(21, 'Mazda', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(22, 'Mercedes-Benz', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(23, 'Mitsubishi', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(24, 'Porsche', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(25, 'Nissan', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(26, 'Subaru', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(27, 'Tesla', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(28, 'Toyota', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(29, 'Volkswagen', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `models`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `models`;
@@ -705,7 +689,7 @@ INSERT INTO `models` (`id`, `model`, `created_at`, `updated_at`) VALUES
 (7, 'Mitsubishi Mirage', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (8, 'Nissan Versa', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (9, 'Toyota Yaris', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 'Chevy Cruze', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(10, 'Alpha Romeo C4', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (11, 'Ford Focus', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (12, 'Honda Civic', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (13, 'Hyundai Elantra', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
@@ -785,14 +769,18 @@ INSERT INTO `models` (`id`, `model`, `created_at`, `updated_at`) VALUES
 (87, 'Chevy Silverado', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (88, 'GMC Sierra', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
 (89, 'Nissan Titan', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(90, 'Ford Transit', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+(90, 'Ford Transit', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(91, 'Aston Martin DB11', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(92, 'Bentley Mulsane', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(93, 'Bugatti Veyron', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(94, 'Tesla Model 3', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `most_popular_cars_report`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `most_popular_cars_report`;
@@ -813,12 +801,17 @@ CREATE TABLE `most_popular_cars_report` (
 --
 
 TRUNCATE TABLE `most_popular_cars_report`;
+--
+-- Dumping data for table `most_popular_cars_report`
+--
+
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `payment_types`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `payment_types`;
@@ -851,7 +844,7 @@ INSERT INTO `payment_types` (`id`, `payment_type`, `created_at`, `updated_at`) V
 --
 -- Table structure for table `reservations`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `reservations`;
@@ -889,6 +882,10 @@ CREATE TABLE `reservations` (
 
 TRUNCATE TABLE `reservations`;
 --
+-- Dumping data for table `reservations`
+--
+
+--
 -- Triggers `reservations`
 --
 DROP TRIGGER IF EXISTS `trig_add_new_sale`;
@@ -915,7 +912,7 @@ DELIMITER ;
 --
 -- Table structure for table `reservation_accessories`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `reservation_accessories`;
@@ -946,7 +943,7 @@ TRUNCATE TABLE `reservation_accessories`;
 --
 -- Table structure for table `reservation_cars`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `reservation_cars`;
@@ -971,6 +968,10 @@ CREATE TABLE `reservation_cars` (
 --
 
 TRUNCATE TABLE `reservation_cars`;
+--
+-- Dumping data for table `reservation_cars`
+--
+
 --
 -- Triggers `reservation_cars`
 --
@@ -1011,7 +1012,7 @@ DELIMITER ;
 --
 -- Table structure for table `roles`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `roles`;
@@ -1044,7 +1045,7 @@ INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `sales_revenue_report`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `sales_revenue_report`;
@@ -1066,12 +1067,16 @@ CREATE TABLE `sales_revenue_report` (
 --
 
 TRUNCATE TABLE `sales_revenue_report`;
+--
+-- Dumping data for table `sales_revenue_report`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -1095,6 +1100,13 @@ CREATE TABLE `users` (
 --
 
 TRUNCATE TABLE `users`;
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `middle_name`, `last_name`, `created_at`, `updated_at`) VALUES
+(1, 'admin@rental.test', 'admin', 'Fatima', 'A.', 'Alansari', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+
 --
 -- Triggers `users`
 --
@@ -1123,7 +1135,7 @@ DELIMITER ;
 --
 -- Table structure for table `user_roles`
 --
--- Creation: Jun 07, 2018 at 01:24 PM
+-- Creation: Jun 07, 2018 at 01:37 PM
 --
 
 DROP TABLE IF EXISTS `user_roles`;
@@ -1148,6 +1160,13 @@ CREATE TABLE `user_roles` (
 --
 
 TRUNCATE TABLE `user_roles`;
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 --
 -- Indexes for dumped tables
 --
@@ -1299,7 +1318,7 @@ ALTER TABLE `card_providers`
 -- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `car_categories`
@@ -1323,19 +1342,19 @@ ALTER TABLE `make_years`
 -- AUTO_INCREMENT for table `manufacturers`
 --
 ALTER TABLE `manufacturers`
-  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `models`
 --
 ALTER TABLE `models`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `most_popular_cars_report`
 --
 ALTER TABLE `most_popular_cars_report`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment_types`
@@ -1347,7 +1366,7 @@ ALTER TABLE `payment_types`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `reservation_accessories`
@@ -1359,7 +1378,7 @@ ALTER TABLE `reservation_accessories`
 -- AUTO_INCREMENT for table `reservation_cars`
 --
 ALTER TABLE `reservation_cars`
-  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1371,19 +1390,19 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales_revenue_report`
 --
 ALTER TABLE `sales_revenue_report`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
