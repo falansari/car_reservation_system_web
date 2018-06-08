@@ -125,16 +125,4 @@ class Categories
         return $data;
     }
 
-    /**
-     * Retrieve all car categories with available cars based on selected manufacturer.
-     * 
-     * @param INT $manufacturer manufacturer id. 0 means any manufacturer.
-     */
-    /*function listCategories($manufacturer)
-    {
-        $db = Database::getInstance();
-        $data = $db->multiFetch("CALL proc_available_car_categories_list(" . $manufacturer . ")");
-        return $data;
-    }*/
-
 }

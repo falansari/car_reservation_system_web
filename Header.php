@@ -1,12 +1,7 @@
 <?php
-
-
 session_start();
 if (!isset($_SESSION["role"]))
    $_SESSION["role"] = 0;
-
- 
-print_r($_SESSION["role"]);
 ?>
 </head>
 <link rel="stylesheet" type="text/css" href="css/cars.css">

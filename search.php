@@ -65,7 +65,6 @@ $dataRows = $cars->searchCarsQueryBuilder(
     $start, $display,
     $startDate, $endDate, $manufacturer, $model, $year,
     $category, $minPrice, $maxPrice);
-
 $totRows = $cars->searchCarsQueryBuilder(null, null,
     $startDate, $endDate, $manufacturer, $model, $year,
     $category, $minPrice, $maxPrice);
@@ -107,6 +106,10 @@ include_once 'Header.php';
                 <tbody>
                     <?php
 if (!empty($dataRows)) {
+    if ($display > count($dataRows))
+    {
+        $display = 1;
+    }
     for ($i = 0; $i < $display; $i++) {
         $image = $dataRows[$i]->image;
         $image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '"/>';

@@ -1,13 +1,7 @@
 <?php
-
-
 session_start();
-
-
 if($_SESSION["role"] != 1)
     header("Location: LoginPage.php");
-print_r($_SESSION["role"]);
-
 ?>
 </head>
 <link rel="stylesheet" type="text/css" href="css/cars.css">

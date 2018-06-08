@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2018 at 01:45 PM
+-- Generation Time: Jun 07, 2018 at 03:34 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -24,24 +24,70 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `car_reservation_system` DEFAULT CHARACTER SET latin1 COLLATE latin1_general_ci;
 USE `car_reservation_system`;
 
+DELIMITER $$
+--
+-- Procedures
+--
+DROP PROCEDURE IF EXISTS `proc_available_car_categories_list`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_available_car_categories_list` (IN `manufacturer` SMALLINT(5))  IF (manufacturer != 0)
+THEN
+    SELECT cc.id, cc.category
+    FROM car_categories AS cc, manufacturers AS m, cars AS c
+    WHERE cc.id = c.category_id
+    AND m.id = c.manufacturer_id
+    AND m.id = manufacturer;
+ELSE
+	SELECT cc.id, cc.category
+    FROM car_categories AS cc, cars AS c
+    WHERE cc.id = c.category_id;
+END IF$$
+
+DROP PROCEDURE IF EXISTS `proc_cars_list_search`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_cars_list_search` (IN `manufacturer` SMALLINT, IN `model` MEDIUMINT, IN `year` SMALLINT, IN `category` TINYINT, IN `startDate` DATE, IN `endDate` DATE, IN `minPrice` DECIMAL(6,3), IN `maxPrice` DECIMAL(6,3))  SELECT c.id, r.manufacturer, m.model, y.year, t.category, c.daily_rental_price, image, SUM(DATEDIFF(endDate, startDate)+1) 'total_days', SUM(c.daily_rental_price * (DATEDIFF(endDate, startDate)+1)) 'total_cost'
+FROM cars c, models m, make_years y, car_categories t, manufacturers r, 
+	customer_reservations cr, reservation_cars rc
+WHERE c.manufacturer_id = r.id
+AND r.id = manufacturer OR r.id = r.id
+AND c.model_id = m.id
+AND m.id = model OR m.id = m.id
+AND c.make_year_id = y.id
+AND y.id = year
+AND c.category_id = t.id
+AND t.id = category
+AND cr.id = rc.reservation_id
+AND c.id = rc.car_id
+AND startDate NOT BETWEEN cr.start_date AND cr.end_date
+AND endDate NOT BETWEEN cr.start_date AND cr.end_date
+AND c.daily_rental_price BETWEEN minPrice AND maxPrice
+GROUP BY c.id
+LIMIT 10$$
+
+DROP PROCEDURE IF EXISTS `proc_manufacturers_list_with_available_cars`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_manufacturers_list_with_available_cars` ()  SELECT manufacturers.id, manufacturers.manufacturer 
+    FROM manufacturers, cars
+    WHERE manufacturers.id = cars.manufacturer_id
+    GROUP BY manufacturers.id$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `accessories`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `accessories`;
-CREATE TABLE IF NOT EXISTS `accessories` (
-  `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `accessories` (
+  `id` smallint(5) UNSIGNED NOT NULL,
   `accessory` varchar(20) COLLATE latin1_general_ci NOT NULL COMMENT 'e.g. child seat, GPS',
   `available_qty` int(11) NOT NULL,
   `reserved_qty` int(11) NOT NULL COMMENT 'quantities used in ongoing reservations',
   `total_qty` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `accessory` (`accessory`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `accessories`:
@@ -57,33 +103,33 @@ TRUNCATE TABLE `accessories`;
 --
 
 INSERT INTO `accessories` (`id`, `accessory`, `available_qty`, `reserved_qty`, `total_qty`, `created_at`, `updated_at`) VALUES
-(1, 'Infant Car Seat', 1, 0, 1, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'Child Car Seat', 1, 0, 1, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 'Booster Car Seat', 1, 0, 1, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(4, 'Screen', 1, 0, 1, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 'Car GPS System', 1, 0, 1, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(6, 'Ski Racks', 1, 0, 1, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(7, 'Snow Tires', 4, 0, 4, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(8, 'Winter Tires', 4, 0, 4, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(9, 'Summer Tires', 4, 0, 4, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 'All-Terrain Tires', 4, 0, 4, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(11, 'Car Insurance', 1, 0, 1, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+(1, 'Infant Car Seat', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(2, 'Child Car Seat', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(3, 'Booster Car Seat', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(4, 'Screen', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(5, 'Car GPS System', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(6, 'Ski Racks', 10, 0, 10, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(7, 'Snow Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(8, 'Winter Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(9, 'Summer Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(10, 'All-Terrain Tires', 40, 0, 40, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(11, 'Car Insurance', 100, 0, 100, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `card_providers`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `card_providers`;
-CREATE TABLE IF NOT EXISTS `card_providers` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `card_providers` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `card_provider` varchar(30) COLLATE latin1_general_ci NOT NULL COMMENT 'e.g. Visa, MasterCard',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `card_provider` (`card_provider`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `card_providers`:
@@ -108,23 +154,20 @@ INSERT INTO `card_providers` (`id`, `card_provider`, `created_at`, `updated_at`)
 --
 -- Table structure for table `cars`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `cars`;
-CREATE TABLE IF NOT EXISTS `cars` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cars` (
+  `id` int(10) UNSIGNED NOT NULL,
   `manufacturer_id` smallint(5) UNSIGNED NOT NULL,
   `model_id` mediumint(8) UNSIGNED NOT NULL,
   `make_year_id` smallint(5) UNSIGNED NOT NULL,
   `category_id` tinyint(3) UNSIGNED NOT NULL,
   `daily_rental_price` decimal(6,3) NOT NULL,
-  `image` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `image` blob NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `manufacturer_id` (`manufacturer_id`),
-  KEY `model_id` (`model_id`),
-  KEY `make_year_id` (`make_year_id`),
-  KEY `category_id` (`category_id`)
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -160,16 +203,16 @@ DELIMITER ;
 --
 -- Table structure for table `car_categories`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `car_categories`;
-CREATE TABLE IF NOT EXISTS `car_categories` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `car_categories` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `category` char(20) COLLATE latin1_general_ci NOT NULL COMMENT 'e.g. SUV, Sedan, Hatchback',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `category` (`category`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `car_categories`:
@@ -204,20 +247,20 @@ INSERT INTO `car_categories` (`id`, `category`, `created_at`, `updated_at`) VALU
 --
 -- Table structure for table `countries`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `countries`;
-CREATE TABLE IF NOT EXISTS `countries` (
-  `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `countries` (
+  `id` smallint(5) UNSIGNED NOT NULL,
   `country_code` char(2) COLLATE latin1_general_ci NOT NULL,
   `country_name_en` varchar(50) COLLATE latin1_general_ci NOT NULL,
   `country_nationality_en` varchar(50) COLLATE latin1_general_ci NOT NULL,
   `country_name_ar` varchar(50) CHARACTER SET utf8 NOT NULL,
   `country_nationality_ar` varchar(50) CHARACTER SET utf8 NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `country_code` (`country_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `countries`:
@@ -484,171 +527,18 @@ INSERT INTO `countries` (`id`, `country_code`, `country_name_en`, `country_natio
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_addresses`
---
-
-DROP TABLE IF EXISTS `customer_addresses`;
-CREATE TABLE IF NOT EXISTS `customer_addresses` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `customer_id` int(10) UNSIGNED NOT NULL,
-  `address` varchar(250) COLLATE latin1_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `address` (`address`),
-  KEY `customer_id` (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- RELATIONSHIPS FOR TABLE `customer_addresses`:
---   `customer_id`
---       `customer_info` -> `id`
---
-
---
--- Truncate table before insert `customer_addresses`
---
-
-TRUNCATE TABLE `customer_addresses`;
--- --------------------------------------------------------
-
---
--- Table structure for table `customer_cards`
---
-
-DROP TABLE IF EXISTS `customer_cards`;
-CREATE TABLE IF NOT EXISTS `customer_cards` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `card_provider_id` tinyint(3) UNSIGNED NOT NULL,
-  `customer_id` int(10) UNSIGNED NOT NULL,
-  `card_number` char(60) COLLATE latin1_general_ci NOT NULL,
-  `expiry_date` date NOT NULL,
-  `security_digits` char(60) COLLATE latin1_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `card_number` (`card_number`),
-  KEY `card_provider_id` (`card_provider_id`),
-  KEY `customer_id` (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- RELATIONSHIPS FOR TABLE `customer_cards`:
---   `card_provider_id`
---       `card_providers` -> `id`
---   `customer_id`
---       `customer_info` -> `id`
---
-
---
--- Truncate table before insert `customer_cards`
---
-
-TRUNCATE TABLE `customer_cards`;
--- --------------------------------------------------------
-
---
--- Table structure for table `customer_info`
---
-
-DROP TABLE IF EXISTS `customer_info`;
-CREATE TABLE IF NOT EXISTS `customer_info` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `country_id` smallint(5) UNSIGNED NOT NULL,
-  `CPR` int(11) NOT NULL,
-  `phone_no` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `country_id` (`country_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- RELATIONSHIPS FOR TABLE `customer_info`:
---   `user_id`
---       `users` -> `id`
---   `country_id`
---       `countries` -> `id`
---
-
---
--- Truncate table before insert `customer_info`
---
-
-TRUNCATE TABLE `customer_info`;
--- --------------------------------------------------------
-
---
--- Table structure for table `customer_reservations`
---
-
-DROP TABLE IF EXISTS `customer_reservations`;
-CREATE TABLE IF NOT EXISTS `customer_reservations` (
-  `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-  `customer_id` int(10) UNSIGNED NOT NULL,
-  `payment_type_id` tinyint(3) UNSIGNED NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `total_rental_cost` decimal(8,3) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `customer_id` (`customer_id`),
-  KEY `payment_type_id` (`payment_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- RELATIONSHIPS FOR TABLE `customer_reservations`:
---   `customer_id`
---       `customer_info` -> `id`
---   `payment_type_id`
---       `payment_types` -> `id`
---
-
---
--- Truncate table before insert `customer_reservations`
---
-
-TRUNCATE TABLE `customer_reservations`;
---
--- Triggers `customer_reservations`
---
-DROP TRIGGER IF EXISTS `trig_add_new_sale`;
-DELIMITER $$
-CREATE TRIGGER `trig_add_new_sale` AFTER INSERT ON `customer_reservations` FOR EACH ROW INSERT INTO `sales_revenue_report`(transaction_id, transaction_date, transaction_amount) VALUES
- (
-     (SELECT id FROM `customer_reservations` WHERE id = NEW.id),
-     (SELECT DATE(created_at) FROM `customer_reservations` WHERE id = NEW.id),
-     (SELECT total_rental_cost FROM `customer_reservations` WHERE id = NEW.id)
- )
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `trig_delete_cancelled_sale`;
-DELIMITER $$
-CREATE TRIGGER `trig_delete_cancelled_sale` BEFORE DELETE ON `customer_reservations` FOR EACH ROW BEGIN
-	DELETE FROM `reservation_cars` WHERE `reservation_cars`.`reservation_id` = OLD.id;
-    DELETE FROM `sales_revenue_report` WHERE `sales_revenue_report`.`transaction_id` = OLD.id;
-END
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `make_years`
+--
+-- Creation: Jun 07, 2018 at 01:24 PM
 --
 
 DROP TABLE IF EXISTS `make_years`;
-CREATE TABLE IF NOT EXISTS `make_years` (
-  `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `make_years` (
+  `id` smallint(5) UNSIGNED NOT NULL,
   `year` year(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `year` (`year`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `make_years`:
@@ -700,16 +590,16 @@ INSERT INTO `make_years` (`id`, `year`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `manufacturers`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `manufacturers`;
-CREATE TABLE IF NOT EXISTS `manufacturers` (
-  `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `manufacturers` (
+  `id` smallint(5) UNSIGNED NOT NULL,
   `manufacturer` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `manufacturer` (`manufacturer`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `manufacturers`:
@@ -781,16 +671,16 @@ INSERT INTO `manufacturers` (`id`, `manufacturer`, `created_at`, `updated_at`) V
 --
 -- Table structure for table `models`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `models`;
-CREATE TABLE IF NOT EXISTS `models` (
-  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `models` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `model` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `model` (`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `models`:
@@ -902,14 +792,14 @@ INSERT INTO `models` (`id`, `model`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `most_popular_cars_report`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `most_popular_cars_report`;
-CREATE TABLE IF NOT EXISTS `most_popular_cars_report` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `most_popular_cars_report` (
+  `id` int(10) UNSIGNED NOT NULL,
   `car_id` int(10) UNSIGNED NOT NULL,
-  `reservations_count` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `car_id` (`car_id`)
+  `reservations_count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -928,16 +818,16 @@ TRUNCATE TABLE `most_popular_cars_report`;
 --
 -- Table structure for table `payment_types`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `payment_types`;
-CREATE TABLE IF NOT EXISTS `payment_types` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `payment_types` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `payment_type` char(4) COLLATE latin1_general_ci NOT NULL COMMENT 'Types:Cash, card',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `payment_type` (`payment_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `payment_types`:
@@ -959,20 +849,83 @@ INSERT INTO `payment_types` (`id`, `payment_type`, `created_at`, `updated_at`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reservations`
+--
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
+
+DROP TABLE IF EXISTS `reservations`;
+CREATE TABLE `reservations` (
+  `id` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `payment_type_id` tinyint(3) UNSIGNED NOT NULL,
+  `country_id` smallint(5) UNSIGNED NOT NULL,
+  `card_provider_id` tinyint(3) UNSIGNED DEFAULT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `total_rental_cost` decimal(8,3) NOT NULL,
+  `address` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `CPR` int(10) UNSIGNED NOT NULL,
+  `phone_no` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `card_number` char(60) COLLATE latin1_general_ci DEFAULT NULL,
+  `card_expiry_date` date DEFAULT NULL,
+  `card_security_digits` char(60) COLLATE latin1_general_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- RELATIONSHIPS FOR TABLE `reservations`:
+--   `card_provider_id`
+--       `card_providers` -> `id`
+--   `country_id`
+--       `countries` -> `id`
+--   `payment_type_id`
+--       `payment_types` -> `id`
+--
+
+--
+-- Truncate table before insert `reservations`
+--
+
+TRUNCATE TABLE `reservations`;
+--
+-- Triggers `reservations`
+--
+DROP TRIGGER IF EXISTS `trig_add_new_sale`;
+DELIMITER $$
+CREATE TRIGGER `trig_add_new_sale` AFTER INSERT ON `reservations` FOR EACH ROW INSERT INTO `sales_revenue_report`(transaction_id, transaction_date, transaction_amount) VALUES
+ (
+     (SELECT id FROM `reservations` WHERE id = NEW.id),
+     (SELECT DATE(created_at) FROM `reservations` WHERE id = NEW.id),
+     (SELECT total_rental_cost FROM `reservations` WHERE id = NEW.id)
+ )
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trig_delete_cancelled_sale`;
+DELIMITER $$
+CREATE TRIGGER `trig_delete_cancelled_sale` BEFORE DELETE ON `reservations` FOR EACH ROW BEGIN
+	DELETE FROM `reservation_cars` WHERE `reservation_cars`.`reservation_id` = OLD.id;
+    DELETE FROM `sales_revenue_report` WHERE `sales_revenue_report`.`transaction_id` = OLD.id;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `reservation_accessories`
+--
+-- Creation: Jun 07, 2018 at 01:24 PM
 --
 
 DROP TABLE IF EXISTS `reservation_accessories`;
-CREATE TABLE IF NOT EXISTS `reservation_accessories` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reservation_accessories` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `accessory_id` smallint(5) UNSIGNED NOT NULL,
   `reservation_id` int(10) UNSIGNED NOT NULL,
   `reserve_qty` tinyint(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `accessory_id` (`accessory_id`),
-  KEY `reservation_id` (`reservation_id`)
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -980,7 +933,7 @@ CREATE TABLE IF NOT EXISTS `reservation_accessories` (
 --   `accessory_id`
 --       `accessories` -> `id`
 --   `reservation_id`
---       `customer_reservations` -> `id`
+--       `reservations` -> `id`
 --
 
 --
@@ -993,23 +946,22 @@ TRUNCATE TABLE `reservation_accessories`;
 --
 -- Table structure for table `reservation_cars`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `reservation_cars`;
-CREATE TABLE IF NOT EXISTS `reservation_cars` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reservation_cars` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `reservation_id` int(10) UNSIGNED NOT NULL,
   `car_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `reservation_id` (`reservation_id`),
-  KEY `car_id` (`car_id`)
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `reservation_cars`:
 --   `reservation_id`
---       `customer_reservations` -> `id`
+--       `reservations` -> `id`
 --   `car_id`
 --       `cars` -> `id`
 --
@@ -1059,16 +1011,16 @@ DELIMITER ;
 --
 -- Table structure for table `roles`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `roles`;
-CREATE TABLE IF NOT EXISTS `roles` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `roles` (
+  `id` int(10) UNSIGNED NOT NULL,
   `role` char(5) COLLATE latin1_general_ci NOT NULL COMMENT 'default roles: admin, user',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `role` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `roles`:
@@ -1092,21 +1044,21 @@ INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `sales_revenue_report`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `sales_revenue_report`;
-CREATE TABLE IF NOT EXISTS `sales_revenue_report` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `sales_revenue_report` (
+  `id` int(10) UNSIGNED NOT NULL,
   `transaction_id` int(10) UNSIGNED NOT NULL,
   `transaction_date` date NOT NULL,
-  `transaction_amount` decimal(8,3) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `transaction_id` (`transaction_id`)
+  `transaction_amount` decimal(8,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- RELATIONSHIPS FOR TABLE `sales_revenue_report`:
 --   `transaction_id`
---       `customer_reservations` -> `id`
+--       `reservations` -> `id`
 --
 
 --
@@ -1119,19 +1071,19 @@ TRUNCATE TABLE `sales_revenue_report`;
 --
 -- Table structure for table `users`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
   `email` char(50) COLLATE latin1_general_ci NOT NULL,
   `password` char(60) COLLATE latin1_general_ci NOT NULL COMMENT 'encrypted value',
   `first_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `middle_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `last_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -1171,17 +1123,16 @@ DELIMITER ;
 --
 -- Table structure for table `user_roles`
 --
+-- Creation: Jun 07, 2018 at 01:24 PM
+--
 
 DROP TABLE IF EXISTS `user_roles`;
-CREATE TABLE IF NOT EXISTS `user_roles` (
-  `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user_roles` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `role_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `role_id` (`role_id`)
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -1198,6 +1149,243 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 TRUNCATE TABLE `user_roles`;
 --
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `accessories`
+--
+ALTER TABLE `accessories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `accessory` (`accessory`);
+
+--
+-- Indexes for table `card_providers`
+--
+ALTER TABLE `card_providers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `card_provider` (`card_provider`);
+
+--
+-- Indexes for table `cars`
+--
+ALTER TABLE `cars`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `manufacturer_id` (`manufacturer_id`),
+  ADD KEY `model_id` (`model_id`),
+  ADD KEY `make_year_id` (`make_year_id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `car_categories`
+--
+ALTER TABLE `car_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `category` (`category`);
+
+--
+-- Indexes for table `countries`
+--
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `country_code` (`country_code`);
+
+--
+-- Indexes for table `make_years`
+--
+ALTER TABLE `make_years`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `year` (`year`);
+
+--
+-- Indexes for table `manufacturers`
+--
+ALTER TABLE `manufacturers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `manufacturer` (`manufacturer`);
+
+--
+-- Indexes for table `models`
+--
+ALTER TABLE `models`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `model` (`model`);
+
+--
+-- Indexes for table `most_popular_cars_report`
+--
+ALTER TABLE `most_popular_cars_report`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `car_id` (`car_id`);
+
+--
+-- Indexes for table `payment_types`
+--
+ALTER TABLE `payment_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `payment_type` (`payment_type`);
+
+--
+-- Indexes for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payment_type_id` (`payment_type_id`),
+  ADD KEY `country_id` (`country_id`),
+  ADD KEY `fk_card_provider_id` (`card_provider_id`);
+
+--
+-- Indexes for table `reservation_accessories`
+--
+ALTER TABLE `reservation_accessories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `accessory_id` (`accessory_id`),
+  ADD KEY `reservation_id` (`reservation_id`);
+
+--
+-- Indexes for table `reservation_cars`
+--
+ALTER TABLE `reservation_cars`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reservation_id` (`reservation_id`),
+  ADD KEY `car_id` (`car_id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `role` (`role`);
+
+--
+-- Indexes for table `sales_revenue_report`
+--
+ALTER TABLE `sales_revenue_report`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaction_id` (`transaction_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `accessories`
+--
+ALTER TABLE `accessories`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `card_providers`
+--
+ALTER TABLE `card_providers`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `cars`
+--
+ALTER TABLE `cars`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `car_categories`
+--
+ALTER TABLE `car_categories`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=248;
+
+--
+-- AUTO_INCREMENT for table `make_years`
+--
+ALTER TABLE `make_years`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `manufacturers`
+--
+ALTER TABLE `manufacturers`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT for table `models`
+--
+ALTER TABLE `models`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
+-- AUTO_INCREMENT for table `most_popular_cars_report`
+--
+ALTER TABLE `most_popular_cars_report`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `payment_types`
+--
+ALTER TABLE `payment_types`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `reservations`
+--
+ALTER TABLE `reservations`
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `reservation_accessories`
+--
+ALTER TABLE `reservation_accessories`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reservation_cars`
+--
+ALTER TABLE `reservation_cars`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `sales_revenue_report`
+--
+ALTER TABLE `sales_revenue_report`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -1211,57 +1399,38 @@ ALTER TABLE `cars`
   ADD CONSTRAINT `cars_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `car_categories` (`id`);
 
 --
--- Constraints for table `customer_addresses`
---
-ALTER TABLE `customer_addresses`
-  ADD CONSTRAINT `customer_addresses_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer_info` (`id`);
-
---
--- Constraints for table `customer_cards`
---
-ALTER TABLE `customer_cards`
-  ADD CONSTRAINT `customer_cards_ibfk_1` FOREIGN KEY (`card_provider_id`) REFERENCES `card_providers` (`id`),
-  ADD CONSTRAINT `customer_cards_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer_info` (`id`);
-
---
--- Constraints for table `customer_info`
---
-ALTER TABLE `customer_info`
-  ADD CONSTRAINT `customer_info_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `customer_info_ibfk_2` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`);
-
---
--- Constraints for table `customer_reservations`
---
-ALTER TABLE `customer_reservations`
-  ADD CONSTRAINT `customer_reservations_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer_info` (`id`),
-  ADD CONSTRAINT `customer_reservations_ibfk_2` FOREIGN KEY (`payment_type_id`) REFERENCES `payment_types` (`id`);
-
---
 -- Constraints for table `most_popular_cars_report`
 --
 ALTER TABLE `most_popular_cars_report`
   ADD CONSTRAINT `most_popular_cars_report_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`);
 
 --
+-- Constraints for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD CONSTRAINT `fk_card_provider_id` FOREIGN KEY (`card_provider_id`) REFERENCES `card_providers` (`id`),
+  ADD CONSTRAINT `fk_country_id` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
+  ADD CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`payment_type_id`) REFERENCES `payment_types` (`id`);
+
+--
 -- Constraints for table `reservation_accessories`
 --
 ALTER TABLE `reservation_accessories`
   ADD CONSTRAINT `reservation_accessories_ibfk_1` FOREIGN KEY (`accessory_id`) REFERENCES `accessories` (`id`),
-  ADD CONSTRAINT `reservation_accessories_ibfk_2` FOREIGN KEY (`reservation_id`) REFERENCES `customer_reservations` (`id`);
+  ADD CONSTRAINT `reservation_accessories_ibfk_2` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`id`);
 
 --
 -- Constraints for table `reservation_cars`
 --
 ALTER TABLE `reservation_cars`
-  ADD CONSTRAINT `reservation_cars_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `customer_reservations` (`id`),
+  ADD CONSTRAINT `reservation_cars_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`id`),
   ADD CONSTRAINT `reservation_cars_ibfk_2` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`);
 
 --
 -- Constraints for table `sales_revenue_report`
 --
 ALTER TABLE `sales_revenue_report`
-  ADD CONSTRAINT `sales_revenue_report_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `customer_reservations` (`id`);
+  ADD CONSTRAINT `sales_revenue_report_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `reservations` (`id`);
 
 --
 -- Constraints for table `user_roles`
@@ -1269,417 +1438,7 @@ ALTER TABLE `sales_revenue_report`
 ALTER TABLE `user_roles`
   ADD CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
-
-
---
--- Metadata
---
-USE `phpmyadmin`;
-
---
--- Metadata for table accessories
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table card_providers
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table cars
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table car_categories
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table countries
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table customer_addresses
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table customer_cards
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table customer_info
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table customer_reservations
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table make_years
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table manufacturers
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table models
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table most_popular_cars_report
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table payment_types
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table reservation_accessories
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table reservation_cars
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table roles
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table sales_revenue_report
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table users
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for table user_roles
---
-
---
--- Truncate table before insert `pma__column_info`
---
-
-TRUNCATE TABLE `pma__column_info`;
---
--- Truncate table before insert `pma__table_uiprefs`
---
-
-TRUNCATE TABLE `pma__table_uiprefs`;
---
--- Truncate table before insert `pma__tracking`
---
-
-TRUNCATE TABLE `pma__tracking`;
---
--- Metadata for database car_reservation_system
---
-
---
--- Truncate table before insert `pma__bookmark`
---
-
-TRUNCATE TABLE `pma__bookmark`;
---
--- Truncate table before insert `pma__relation`
---
-
-TRUNCATE TABLE `pma__relation`;
---
--- Truncate table before insert `pma__savedsearches`
---
-
-TRUNCATE TABLE `pma__savedsearches`;
---
--- Truncate table before insert `pma__central_columns`
---
-
-TRUNCATE TABLE `pma__central_columns`;COMMIT;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

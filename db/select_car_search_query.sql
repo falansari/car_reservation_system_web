@@ -9,23 +9,23 @@
  * @link     https://github.com/falansari/car_reservation_system_web/issues/7
  */
 
-SELECT c.id, r.manufacturer, m.model, y.year, t.category, c.daily_rental_price,
-image, SUM(DATEDIFF(endDate, startDate)+1) 'total_days',
-SUM(c.daily_rental_price * (DATEDIFF(endDate, startDate)+1)) 'total_cost'
-FROM cars c, models m, make_years y, car_categories t, manufacturers r,
-	customer_reservations cr, reservation_cars rc
-WHERE c.manufacturer_id = r.id
-AND c.model_id = m.id
-AND c.make_year_id = y.id
-AND c.category_id = t.id
-AND cr.id = rc.reservation_id
-AND c.id = rc.car_id
-#AND c.daily_rental_price BETWEEN minPrice AND maxPrice
-#AND r.id = manufacturer id
-#AND m.id = model id
-#AND y.id = year id
-#AND t.id = category id
-AND endDate NOT BETWEEN cr.start_date AND cr.end_date
-AND startDate NOT BETWEEN cr.start_date AND cr.end_date
-GROUP BY c.id
-LIMIT start, display
+SELECT cars.id, manufacturers.manufacturer, models.model, make_years.year, car_categories.category, cars.daily_rental_price,
+cars.image, SUM(DATEDIFF(CURRENT_DATE, CURRENT_DATE)+1) 'total_days',
+SUM(cars.daily_rental_price * (DATEDIFF(CURRENT_DATE, CURRENT_DATE)+1)) 'total_cost'
+FROM cars, models, make_years, car_categories, manufacturers,
+	reservations, reservation_cars
+WHERE cars.manufacturer_id = manufacturers.id
+AND cars.model_id = models.id
+AND cars.make_year_id = make_years.id
+AND cars.category_id = car_categories.id
+AND reservations.id = reservation_cars.reservation_id OR reservation_cars.reservation_id = NULL
+AND cars.id = reservation_cars.car_id OR reservation_cars.car_id = NULL
+#AND cars.daily_rental_price BETWEEN minPrice AND maxPrice
+#AND manufacturers.id = manufacturer id
+#AND models.id = model id
+#AND make_years.id = year id
+#AND car_categories.id = category id
+AND CURRENT_DATE NOT BETWEEN reservations.start_date AND reservations.end_date OR reservations.start_date = NULL
+AND CURRENT_DATE NOT BETWEEN reservations.start_date AND reservations.end_date OR reservations.end_date = NULL
+GROUP BY cars.id
+#LIMIT start, display

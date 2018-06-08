@@ -9,6 +9,7 @@ table {
 th, td {
     text-align: center;
     height: 50px;
+    padding: 15px;
 }
 th:hover, td:hover {
     text-decoration: underline;
