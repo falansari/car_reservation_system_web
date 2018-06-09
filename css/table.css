@@ -20,3 +20,16 @@ tr:hover {
 .overflow {
     overflow-x: auto;
 }
+
+/* 2 COLUMN LAYOUT */
+.row {
+    display: flex;
+}
+.column {
+    flex: 50%;
+    text-align: unset;
+}
+.left {
+    text-align: left;
+    padding-left: 10%;
+}

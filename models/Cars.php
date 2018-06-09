@@ -348,8 +348,8 @@ class Cars
     {
         if ($id) {
             $db = Database::getInstance();
-            $data = $db->singleFetch('SELECT cars.id, cars.image, cars.daily_rental_price, manufacturers.manufacturer,
-                models.model, car_categories.category, make_years.year
+            $data = $db->singleFetch('SELECT cars.id, cars.image, cars.daily_rental_price,
+                manufacturers.manufacturer, models.model, car_categories.category, make_years.year
                 FROM cars, manufacturers, models, car_categories, make_years
                 WHERE cars.id = ' . $id . '
                 AND cars.manufacturer_id = manufacturers.id
@@ -361,6 +361,36 @@ class Cars
         } else {
             echo "No car id provided or car doesn't exist.";
         }
+    }
+
+    /**
+     * Returns true if car is being double booked. Returns false if not.
+     * @param   INT     $id             Required. Car id.
+     * @param   DATE    $startDate      Required. Booking start date.
+     * @param   DATE    $endDate        Required. Booking end date.
+     */
+    public function checkDoubleBooking($id, $startDate, $endDate)
+    {
+        if ($id && $startDate && $endDate) {
+            $db = Database::getInstance();
+            $sql = "SELECT cars.id, reservations.start_date, reservations.end_date
+                FROM cars, reservations, reservation_cars
+                WHERE cars.id = " . $id . "
+                AND reservation_cars.car_id = cars.id
+                AND reservation_cars.reservation_id = reservations.id
+                AND reservations.start_date BETWEEN '" . $startDate . "' AND '" . $endDate . "'
+                OR reservations.end_date BETWEEN '" . $startDate . "' AND '" . $endDate . "'
+                GROUP BY reservations.id";
+            $data = $db->multiFetch($sql);
+            
+            if ($data != NULL)
+            {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
 }
