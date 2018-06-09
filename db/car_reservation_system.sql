@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2018 at 11:44 AM
+-- Generation Time: Jun 09, 2018 at 08:51 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -24,58 +24,12 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `car_reservation_system` DEFAULT CHARACTER SET latin1 COLLATE latin1_general_ci;
 USE `car_reservation_system`;
 
-DELIMITER $$
---
--- Procedures
---
-DROP PROCEDURE IF EXISTS `proc_available_car_categories_list`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_available_car_categories_list` (IN `manufacturer` SMALLINT(5))  IF (manufacturer != 0)
-THEN
-    SELECT cc.id, cc.category
-    FROM car_categories AS cc, manufacturers AS m, cars AS c
-    WHERE cc.id = c.category_id
-    AND m.id = c.manufacturer_id
-    AND m.id = manufacturer;
-ELSE
-	SELECT cc.id, cc.category
-    FROM car_categories AS cc, cars AS c
-    WHERE cc.id = c.category_id;
-END IF$$
-
-DROP PROCEDURE IF EXISTS `proc_cars_list_search`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_cars_list_search` (IN `manufacturer` SMALLINT, IN `model` MEDIUMINT, IN `year` SMALLINT, IN `category` TINYINT, IN `startDate` DATE, IN `endDate` DATE, IN `minPrice` DECIMAL(6,3), IN `maxPrice` DECIMAL(6,3))  SELECT c.id, r.manufacturer, m.model, y.year, t.category, c.daily_rental_price, image, SUM(DATEDIFF(endDate, startDate)+1) 'total_days', SUM(c.daily_rental_price * (DATEDIFF(endDate, startDate)+1)) 'total_cost'
-FROM cars c, models m, make_years y, car_categories t, manufacturers r, 
-	customer_reservations cr, reservation_cars rc
-WHERE c.manufacturer_id = r.id
-AND r.id = manufacturer OR r.id = r.id
-AND c.model_id = m.id
-AND m.id = model OR m.id = m.id
-AND c.make_year_id = y.id
-AND y.id = year
-AND c.category_id = t.id
-AND t.id = category
-AND cr.id = rc.reservation_id
-AND c.id = rc.car_id
-AND startDate NOT BETWEEN cr.start_date AND cr.end_date
-AND endDate NOT BETWEEN cr.start_date AND cr.end_date
-AND c.daily_rental_price BETWEEN minPrice AND maxPrice
-GROUP BY c.id
-LIMIT 10$$
-
-DROP PROCEDURE IF EXISTS `proc_manufacturers_list_with_available_cars`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_manufacturers_list_with_available_cars` ()  SELECT manufacturers.id, manufacturers.manufacturer 
-    FROM manufacturers, cars
-    WHERE manufacturers.id = cars.manufacturer_id
-    GROUP BY manufacturers.id$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `accessories`
 --
--- Creation: Jun 08, 2018 at 09:40 AM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `accessories`;
@@ -94,11 +48,6 @@ CREATE TABLE `accessories` (
 -- RELATIONSHIPS FOR TABLE `accessories`:
 --
 
---
--- Truncate table before insert `accessories`
---
-
-TRUNCATE TABLE `accessories`;
 --
 -- Dumping data for table `accessories`
 --
@@ -121,7 +70,7 @@ INSERT INTO `accessories` (`id`, `accessory`, `daily_rental_price`, `available_q
 --
 -- Table structure for table `card_providers`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `card_providers`;
@@ -137,11 +86,6 @@ CREATE TABLE `card_providers` (
 --
 
 --
--- Truncate table before insert `card_providers`
---
-
-TRUNCATE TABLE `card_providers`;
---
 -- Dumping data for table `card_providers`
 --
 
@@ -155,7 +99,7 @@ INSERT INTO `card_providers` (`id`, `card_provider`, `created_at`, `updated_at`)
 --
 -- Table structure for table `cars`
 --
--- Creation: Jun 07, 2018 at 02:25 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `cars`;
@@ -184,13 +128,14 @@ CREATE TABLE `cars` (
 --
 
 --
--- Truncate table before insert `cars`
---
-
-TRUNCATE TABLE `cars`;
---
 -- Dumping data for table `cars`
 --
+
+INSERT INTO `cars` (`id`, `manufacturer_id`, `model_id`, `make_year_id`, `category_id`, `daily_rental_price`, `created_at`, `updated_at`) VALUES
+(1, 6, 57, 29, 4, '10.000', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `cars` (`id`, `manufacturer_id`, `model_id`, `make_year_id`, `category_id`, `daily_rental_price`, `created_at`, `updated_at`) VALUES
+(2, 13, 2, 29, 7, '6.000', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(3, 2, 10, 24, 9, '30.000', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
 
 --
 -- Triggers `cars`
@@ -208,7 +153,7 @@ DELIMITER ;
 --
 -- Table structure for table `car_categories`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `car_categories`;
@@ -223,11 +168,6 @@ CREATE TABLE `car_categories` (
 -- RELATIONSHIPS FOR TABLE `car_categories`:
 --
 
---
--- Truncate table before insert `car_categories`
---
-
-TRUNCATE TABLE `car_categories`;
 --
 -- Dumping data for table `car_categories`
 --
@@ -252,7 +192,7 @@ INSERT INTO `car_categories` (`id`, `category`, `created_at`, `updated_at`) VALU
 --
 -- Table structure for table `countries`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `countries`;
@@ -271,11 +211,6 @@ CREATE TABLE `countries` (
 -- RELATIONSHIPS FOR TABLE `countries`:
 --
 
---
--- Truncate table before insert `countries`
---
-
-TRUNCATE TABLE `countries`;
 --
 -- Dumping data for table `countries`
 --
@@ -534,7 +469,7 @@ INSERT INTO `countries` (`id`, `country_code`, `country_name_en`, `country_natio
 --
 -- Table structure for table `make_years`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `make_years`;
@@ -549,11 +484,6 @@ CREATE TABLE `make_years` (
 -- RELATIONSHIPS FOR TABLE `make_years`:
 --
 
---
--- Truncate table before insert `make_years`
---
-
-TRUNCATE TABLE `make_years`;
 --
 -- Dumping data for table `make_years`
 --
@@ -595,7 +525,7 @@ INSERT INTO `make_years` (`id`, `year`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `manufacturers`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `manufacturers`;
@@ -610,11 +540,6 @@ CREATE TABLE `manufacturers` (
 -- RELATIONSHIPS FOR TABLE `manufacturers`:
 --
 
---
--- Truncate table before insert `manufacturers`
---
-
-TRUNCATE TABLE `manufacturers`;
 --
 -- Dumping data for table `manufacturers`
 --
@@ -655,7 +580,7 @@ INSERT INTO `manufacturers` (`id`, `manufacturer`, `created_at`, `updated_at`) V
 --
 -- Table structure for table `models`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `models`;
@@ -670,11 +595,6 @@ CREATE TABLE `models` (
 -- RELATIONSHIPS FOR TABLE `models`:
 --
 
---
--- Truncate table before insert `models`
---
-
-TRUNCATE TABLE `models`;
 --
 -- Dumping data for table `models`
 --
@@ -780,7 +700,7 @@ INSERT INTO `models` (`id`, `model`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `most_popular_cars_report`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `most_popular_cars_report`;
@@ -797,21 +717,18 @@ CREATE TABLE `most_popular_cars_report` (
 --
 
 --
--- Truncate table before insert `most_popular_cars_report`
---
-
-TRUNCATE TABLE `most_popular_cars_report`;
---
 -- Dumping data for table `most_popular_cars_report`
 --
 
+INSERT INTO `most_popular_cars_report` (`id`, `car_id`, `reservations_count`) VALUES
+(3, 11, 2);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `payment_types`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `payment_types`;
@@ -827,11 +744,6 @@ CREATE TABLE `payment_types` (
 --
 
 --
--- Truncate table before insert `payment_types`
---
-
-TRUNCATE TABLE `payment_types`;
---
 -- Dumping data for table `payment_types`
 --
 
@@ -844,7 +756,7 @@ INSERT INTO `payment_types` (`id`, `payment_type`, `created_at`, `updated_at`) V
 --
 -- Table structure for table `reservations`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 09, 2018 at 06:50 PM
 --
 
 DROP TABLE IF EXISTS `reservations`;
@@ -856,6 +768,9 @@ CREATE TABLE `reservations` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `total_rental_cost` decimal(8,3) NOT NULL,
+  `first_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `middle_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `last_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `address` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `CPR` int(10) UNSIGNED NOT NULL,
   `phone_no` varchar(20) COLLATE latin1_general_ci NOT NULL,
@@ -877,13 +792,12 @@ CREATE TABLE `reservations` (
 --
 
 --
--- Truncate table before insert `reservations`
---
-
-TRUNCATE TABLE `reservations`;
---
 -- Dumping data for table `reservations`
 --
+
+INSERT INTO `reservations` (`id`, `payment_type_id`, `country_id`, `card_provider_id`, `start_date`, `end_date`, `total_rental_cost`, `first_name`, `middle_name`, `last_name`, `address`, `CPR`, `phone_no`, `card_number`, `card_expiry_date`, `card_security_digits`, `created_at`, `updated_at`) VALUES
+(0000000004, 1, 18, NULL, '2018-06-20', '2018-06-25', '50.000', '', '', '', 'road 6846 block 654 bld 6799 manama', 93579217, '6135468', NULL, NULL, NULL, CURRENT_TIMESTAMP, '2018-06-09 09:35:38'),
+(0000000005, 1, 9, NULL, '2018-05-08', '2018-05-16', '200.000', '', '', '', '54251321rg 52', 3216546, '3213564684', NULL, NULL, NULL, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
 
 --
 -- Triggers `reservations`
@@ -912,7 +826,7 @@ DELIMITER ;
 --
 -- Table structure for table `reservation_accessories`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `reservation_accessories`;
@@ -933,17 +847,12 @@ CREATE TABLE `reservation_accessories` (
 --       `reservations` -> `id`
 --
 
---
--- Truncate table before insert `reservation_accessories`
---
-
-TRUNCATE TABLE `reservation_accessories`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `reservation_cars`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `reservation_cars`;
@@ -964,13 +873,12 @@ CREATE TABLE `reservation_cars` (
 --
 
 --
--- Truncate table before insert `reservation_cars`
---
-
-TRUNCATE TABLE `reservation_cars`;
---
 -- Dumping data for table `reservation_cars`
 --
+
+INSERT INTO `reservation_cars` (`id`, `reservation_id`, `car_id`, `created_at`, `updated_at`) VALUES
+(4, 4, 11, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
+(5, 5, 11, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
 
 --
 -- Triggers `reservation_cars`
@@ -1012,7 +920,7 @@ DELIMITER ;
 --
 -- Table structure for table `roles`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `roles`;
@@ -1028,11 +936,6 @@ CREATE TABLE `roles` (
 --
 
 --
--- Truncate table before insert `roles`
---
-
-TRUNCATE TABLE `roles`;
---
 -- Dumping data for table `roles`
 --
 
@@ -1045,7 +948,7 @@ INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
 --
 -- Table structure for table `sales_revenue_report`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `sales_revenue_report`;
@@ -1063,20 +966,19 @@ CREATE TABLE `sales_revenue_report` (
 --
 
 --
--- Truncate table before insert `sales_revenue_report`
---
-
-TRUNCATE TABLE `sales_revenue_report`;
---
 -- Dumping data for table `sales_revenue_report`
 --
+
+INSERT INTO `sales_revenue_report` (`id`, `transaction_id`, `transaction_date`, `transaction_amount`) VALUES
+(4, 4, '2018-06-08', '50.000'),
+(5, 5, '2018-06-09', '200.000');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -1095,11 +997,6 @@ CREATE TABLE `users` (
 -- RELATIONSHIPS FOR TABLE `users`:
 --
 
---
--- Truncate table before insert `users`
---
-
-TRUNCATE TABLE `users`;
 --
 -- Dumping data for table `users`
 --
@@ -1135,7 +1032,7 @@ DELIMITER ;
 --
 -- Table structure for table `user_roles`
 --
--- Creation: Jun 07, 2018 at 01:37 PM
+-- Creation: Jun 08, 2018 at 10:18 AM
 --
 
 DROP TABLE IF EXISTS `user_roles`;
@@ -1155,11 +1052,6 @@ CREATE TABLE `user_roles` (
 --       `roles` -> `id`
 --
 
---
--- Truncate table before insert `user_roles`
---
-
-TRUNCATE TABLE `user_roles`;
 --
 -- Dumping data for table `user_roles`
 --
@@ -1318,7 +1210,7 @@ ALTER TABLE `card_providers`
 -- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `car_categories`
@@ -1354,7 +1246,7 @@ ALTER TABLE `models`
 -- AUTO_INCREMENT for table `most_popular_cars_report`
 --
 ALTER TABLE `most_popular_cars_report`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `payment_types`
@@ -1366,7 +1258,7 @@ ALTER TABLE `payment_types`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `reservation_accessories`
@@ -1378,7 +1270,7 @@ ALTER TABLE `reservation_accessories`
 -- AUTO_INCREMENT for table `reservation_cars`
 --
 ALTER TABLE `reservation_cars`
-  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1390,7 +1282,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales_revenue_report`
 --
 ALTER TABLE `sales_revenue_report`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`

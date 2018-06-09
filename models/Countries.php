@@ -9,7 +9,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/Database.php';
  * @category Model
  * @package  Database
  * @author   Fatima A. Alansari (falansari) <fatima.a.alansari@outlook.com>
- * @link     https://github.com/falansari/car_reservation_system_web/issues/7
+ * @link     https://github.com/falansari/car_reservation_system_web/issues/55
  */
 class Countries
 {
