@@ -38,8 +38,9 @@ if (isset($_POST['submitted'])) {
         if ($doubleBooked === true) {
             echo '<p class="error">This car is not available within the specified dates. Please change dates or choose a different car.</p>';
         } else { // Pass all data to checkout page
-            if (!empty($_POST['accessoriesList'])) {
-                $accessories = serialize($_POST['accessoriesList']);
+            if (!empty($_POST['accessoriesList']))
+            {
+                $accessoriesList = $_POST['accessoriesList'];
             }
             if (isset($_POST['firstName'])) {
                 $firstName = trim($_POST['firstName']);
@@ -63,12 +64,34 @@ if (isset($_POST['submitted'])) {
                 $address = trim($_POST['address']);
             }
 
+            /*
             $url = 'checkout.php?car_id=' . $car . '&startDate=' . $start . '&endDate=' . $end .
                 '&firstName=' . $firstName . '&middleName=' . $middleName . '&lastName=' . $lastName .
                 '&nationality=' . $nationality . '&cpr=' . $cpr . '&phone=' . $phone . '&address=' . $address .
                 '&accessoriesList[]=' . $accessories . '';
-            header("Location: " . $url . ""); /* Redirect browser */
-            exit();
+            header("Location: " . $url . ""); // Redirect browser
+            exit();*/
+            ?>
+            <form action="checkout.php" method="POST" id="toCheckout">
+                <input type="hidden" name="car_id" value="<?php echo $car_id; ?>">
+                <input type="hidden" name="startDate" value="<?php echo $start; ?>">
+                <input type="hidden" name="endDate" value="<?php echo $end; ?>">
+                <input type="hidden" name="firstName" value="<?php echo $firstName; ?>">
+                <input type="hidden" name="middleName" value="<?php echo $middleName; ?>">
+                <input type="hidden" name="lastName" value="<?php echo $lastName; ?>">
+                <input type="hidden" name="nationality" value="<?php echo $nationality; ?>">
+                <input type="hidden" name="cpr" value="<?php echo $cpr; ?>">
+                <input type="hidden" name="phone" value="<?php echo $phone; ?>">
+                <input type="hidden" name="address" value="<?php echo $address; ?>">
+                <?php
+                if (!empty($accessoriesList)) {
+                    for ($i = 0; $i < count($accessoriesList); $i++) {
+                        echo '<input type="hidden" name="accessoriesList[]" value="' . $accessoriesList[$i] . '" />';
+                    }
+                }
+                ?>
+            </form>
+            <?php
         }
     }
 }
@@ -151,11 +174,9 @@ if (!empty($nationalities)) {
                 <input type="hidden" name="car_id" value="<?php echo $car_id; ?>" required>
                 <?php
 if (!empty($accessories)) {
-    $value = "";
     for ($i = 0; $i < count($accessories); $i++) {
-        $value .= '<input type="hidden" name="accessoriesList[' . $accessories[$i] . ']" value="' . $accessories[$i] . '" required />';
+        echo '<input type="hidden" name="accessoriesList[]" value="' . $accessories[$i] . '" />';
     }
-    echo $value;
 }
 ?>
             </form>
@@ -204,5 +225,11 @@ if (!empty($accessories)) {
     document.getElementById("endDate").setAttribute("min", today);
     // Maximum selectable end date is six months from today
     document.getElementById("endDate").setAttribute("max", max);
+</script>
+<script type="text/javascript">
+    if (toCheckout)
+    {
+        document.forms["toCheckout"].submit();
+    }
 </script>
 </html>

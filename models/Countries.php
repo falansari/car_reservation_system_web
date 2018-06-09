@@ -166,8 +166,7 @@ class Countries
      */
     public function setCountryNationalityAr()
     {
-        if (is_string($country_nationality_ar))
-        {
+        if (is_string($country_nationality_ar)) {
             $this->country_nationality_ar = (string) $country_nationality_ar;
         }
     }
@@ -175,7 +174,7 @@ class Countries
     /**
      * Initialize new record data
      */
-    public function initWith($id, $country_code, $country_name_en, 
+    public function initWith($id, $country_code, $country_name_en,
         $country_nationality_en, $country_name_ar, $country_nationality_ar,
         $created_at, $updated_at) {
         $this->id = $id;
@@ -195,8 +194,8 @@ class Countries
     {
         $db = Database::getInstance();
         $data = $db->singleFetch('SELECT * FROM countries WHERE id = ' . $id);
-        $this->initWith($data->id, $data->country_code, $data->country_name_en, 
-            $data->country_nationality_en, $data->country_name_ar, 
+        $this->initWith($data->id, $data->country_code, $data->country_name_en,
+            $data->country_nationality_en, $data->country_name_ar,
             $data->country_nationality_ar, $data->created_at, $data->updated_at);
     }
 
@@ -217,6 +216,20 @@ class Countries
     {
         $db = Database::getInstance();
         $data = $db->multiFetch('SELECT id, country_nationality_en FROM countries GROUP BY id');
+        return $data;
+    }
+
+    /**
+     * Retrieve country name & nationality (English) from database.
+     * @param   INT     $id     Required. Country id.
+     */
+    public function country($id)
+    {
+        $db = Database::getInstance();
+        $sql = 'SELECT id, country_nationality_en, country_name_en
+            FROM countries
+            WHERE id = ' . $id . '';
+        $data = $db->singleFetch($sql);
         return $data;
     }
 

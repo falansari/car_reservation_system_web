@@ -146,8 +146,7 @@ class Accesssories
      */
     public function setAvailableQty($available_qty)
     {
-        if(is_integer($available_qty))
-        {
+        if (is_integer($available_qty)) {
             $this->available_qty = (integer) $available_qty;
         }
     }
@@ -157,8 +156,7 @@ class Accesssories
      */
     public function setReservedQty($reserved_qty)
     {
-        if(is_integer($reserved_qty))
-        {
+        if (is_integer($reserved_qty)) {
             $this->reserved_qty = (integer) $reserved_qty;
         }
     }
@@ -168,8 +166,7 @@ class Accesssories
      */
     public function setTotalQty($total_qty)
     {
-        if(is_integer($total_qty))
-        {
+        if (is_integer($total_qty)) {
             $this->total_qty = (integer) $total_qty;
         }
     }
@@ -197,8 +194,8 @@ class Accesssories
     {
         $db = Database::getInstance();
         $data = $db->singleFetch('SELECT * FROM accessories WHERE id = ' . $id);
-        $this->initWith($data->id, $data->accessory, $data->daily_rental_price, 
-            $data->available_qty, $data->reserved_qty, $data->total_qty, 
+        $this->initWith($data->id, $data->accessory, $data->daily_rental_price,
+            $data->available_qty, $data->reserved_qty, $data->total_qty,
             $data->created_at, $data->updated_at);
     }
 
@@ -209,6 +206,53 @@ class Accesssories
     {
         $db = Database::getInstance();
         $data = $db->multiFetch('SELECT * FROM accessories');
+        return $data;
+    }
+
+    /**
+     * Retrieve selected accessories info from database
+     * @param   ARRAY   $accessories    Required. Array of int accessory ids.
+     */
+    public function accessories($accessories)
+    {
+        $db = Database::getInstance();
+        $sql = 'SELECT id, accessory, daily_rental_price
+            FROM accessories
+            WHERE id = ' . $accessories[0];
+
+        if (count($accessories) >= 1) {
+            for ($i = 1; $i < count($accessories); $i++) {
+                $sql .= ' OR id = ' . $accessories[$i];
+            }
+        }
+
+        $sql .= ' GROUP BY id';
+        $data = $db->multiFetch($sql);
+        return $data;
+    }
+
+    /**
+     * Retrieve total rental days & cost from db
+     * @param   ARRAY   $id             Required. Rental accessories id array.
+     * @param   DATE    $startDate      Required. Rental start date.
+     * @param   DATE    $endDate        Required. Rental end date.
+     */
+    public function totalRental($id, $startDate, $endDate)
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT SUM(accessories.daily_rental_price * (DATEDIFF('$endDate', '$startDate')+1)) 'total_cost'
+            FROM accessories
+            WHERE accessories.id = " . $id[0] . "";
+
+        if (count($id) > 1)
+        {
+            for ($i = 1; $i < count($id); $i++)
+            {
+                $sql .= ' OR accessories.id = '.$id[$i];
+            }
+        }
+        $sql .= " GROUP BY 'total_cost'";
+        $data = $db->singleFetch($sql);
         return $data;
     }
 

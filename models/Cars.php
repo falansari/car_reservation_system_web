@@ -382,15 +382,31 @@ class Cars
                 OR reservations.end_date BETWEEN '" . $startDate . "' AND '" . $endDate . "'
                 GROUP BY reservations.id";
             $data = $db->multiFetch($sql);
-            
-            if ($data != NULL)
-            {
+
+            if ($data != null) {
                 return true;
             } else {
                 return false;
             }
         }
         return false;
+    }
+
+    /**
+     * Retrieve total rental days & cost from db
+     * @param   INT     $id             Required. Car id.
+     * @param   DATE    $startDate      Required. Rental start date.
+     * @param   DATE    $endDate        Required. Rental end date.
+     */
+    public function totalRental($id, $startDate, $endDate)
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT cars.id, SUM(DATEDIFF('$endDate', '$startDate')+1) 'total_days',
+            SUM(cars.daily_rental_price * (DATEDIFF('$endDate', '$startDate')+1)) 'total_cost'
+            FROM cars
+            WHERE cars.id = $id";
+        $data = $db->singleFetch($sql);
+        return $data;
     }
 
 }
