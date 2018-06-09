@@ -273,9 +273,7 @@ class Cars
             WHERE cars.manufacturer_id = manufacturers.id
             AND cars.model_id = models.id
             AND cars.make_year_id = make_years.id
-            AND cars.category_id = car_categories.id
-            AND reservations.id = reservation_cars.reservation_id OR reservation_cars.reservation_id = NULL
-            AND cars.id = reservation_cars.car_id OR reservation_cars.car_id = NULL";
+            AND cars.category_id = car_categories.id";
 
             if (!empty($manufacturer)) {
                 $sql .= " AND manufacturers.`id` = '$manufacturer'";
@@ -299,6 +297,8 @@ class Cars
 
             $sql .= " AND '$startDate' NOT BETWEEN reservations.start_date AND reservations.end_date
                     AND '$endDate' NOT BETWEEN reservations.start_date AND reservations.end_date
+                    AND reservations.id = reservation_cars.reservation_id OR reservation_cars.reservation_id = NULL
+                    AND cars.id = reservation_cars.car_id OR reservation_cars.car_id = NULL
                     GROUP BY cars.id";
 
             if (!empty($start) && !empty($display)) {
