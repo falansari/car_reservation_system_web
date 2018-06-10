@@ -30,7 +30,7 @@ table,th,td {
         $data = $db->multiFetch($q);
         ?>
          <form>
-             <h3>Add New  </h3><input type="button" value="Add" onclick="window.location.href='AddManufacture.php'" />
+             <center> <h3>Add New  </h3><input type="button" class="Button SubButton" value="Add Manufacturer" onclick="window.location.href='AddManufacture.php'" /></center>
 </form>
 <?php
         if (!empty($data)) {

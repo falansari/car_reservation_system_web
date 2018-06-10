@@ -33,6 +33,18 @@ class Dropdownfunctions {
             }
         }
     }
+    function accessory() {
+
+        $q = "SELECT * FROM accessories";
+        $db = new Database();
+
+        if ($data = $db->multiFetch($q)) {
+            for ($i = 0; $i < count($data); $i++) {
+              
+                echo '<input type="checkbox" value="' . $data[$i]->id . '">'. $data[$i]->accessory .'<br>';
+            }
+        }
+    }
 
     function manufacture() {
 

@@ -38,8 +38,9 @@ join models mo on mo.id = c.model_id
         $data = $db->multiFetch($q);
            ?>
         <form>
-<h3>Add New  </h3><input type="button" value="Add" onclick="window.location.href='AddCar.php'" />
+            <center><h2>Add New Car </h2><input type="button" class="Button SubButton" value="Add a new car" onclick="window.location.href='AddCar.php'" /></center>
 </form>
+            <center>
 <?php
 
         if (!empty($data)) {
@@ -71,14 +72,14 @@ join models mo on mo.id = c.model_id
                 for ($i = 0; $i < $row_cnt; $i++) {
                     $bg = ($bg == '#f2f2f2' ? '#f2f2f2' : '#f2f2f2');
 $img = $data[$i]->image;
-$img = '<img src="data:image/jpg;base64,'.base64_encode( $img ).'"/>';
+$img = '<img src="data:image/jpg;base64,'.base64_encode( $img ).'" height="100px" width="120px"/>';
                     $table .= '<tr bgcolor="' . $bg . '">
-                        
+                        <center>
                         <td><a href="EditCars.php?id=' .  $data[$i]->id . '">Edit</a></td>
                             <td><a href="deleteCar.php?id=' .  $data[$i]->id . '">Delete</a></td>
                           <td>' . $img.'</td>
                           <td>' . $data[$i]->category. '</td>
-                          <td>' . $data[$i]->category. '</td>
+                          
                           <td>' . $data[$i]->manufacturer . '</td>
                           <td>' . $data[$i]->model . '</td>
                           <td>' . $data[$i]->year. '</td>
@@ -92,7 +93,7 @@ $img = '<img src="data:image/jpg;base64,'.base64_encode( $img ).'"/>';
             }
         }
         else {
-            echo '<p class="error"> Oh dear. There was an error</p>';
+            echo '<p class="error"> Oh dear. No Data Found</p>';
         }
         ?>
     </body>

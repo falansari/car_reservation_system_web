@@ -22,7 +22,7 @@ include_once 'AdminHeader.php';
         <table>
         
             
-            <tr><td><button class="Button AdButton"  onClick="parent.location='#'" >Search Cars</button>
+            <tr><td><button class="Button AdButton"  onClick="parent.location='AdminSearch.php'" >Search Cars</button>
                   <br>  <br>  <br>  <br>
             <tr><td><td><button class=" Button AdButton"   onClick="parent.location='AdminAlter.php'" >Edit Database Items </button>
             <br>  <br> <br>  <br>

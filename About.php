@@ -11,9 +11,15 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        include 'Header.php';
+        
+  include 'Header.php';
+  
         ?>
     <center>
+        <?php
+        
+        ?>
+        
         <div id="aboutsidebar">
             <h1>About Us</h1>
              Today the company has a fleet of all the Latest Model Vehicles in and it is well known for it's service, price and flexibility.

@@ -31,7 +31,7 @@ table,th,td {
         
            ?>
          <form>
-             <h3>Add New  </h3><input type="button" value="Add" onclick="window.location.href='AddModel.php'" />
+             <center>    <h3>Add New Model </h3><input type="button" class="Button SubButton" value="Add new model" onclick="window.location.href='AddModel.php'" /></center>
 </form>
 <?php
 

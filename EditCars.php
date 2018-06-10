@@ -82,7 +82,7 @@ $drop->category();
                 Daily rental price :
                 <input  name="price" type="text" value="<?php echo $data->daily_rental_price ?>" >
                 <br> <br> <br>
-
+               
                 <div align="center">
 
                     <input type ="submit" class ="Button SubButton" value ="Change" />
@@ -110,9 +110,11 @@ $idd = $_POST['submitted'];
 
     $q3 = "Update cars set manufacturer_id = $man, category_id = $cat, model_id = $mod, make_year_id = $year, daily_rental_price = $price where id = $idd";
     $data3 = $db->querySQL($q3);
+     
     
             echo '<script>window.location = "AdminCars.php"</script>';
         
       
+
 }
 ?>

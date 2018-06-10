@@ -25,18 +25,18 @@ table,th,td {
         include_once 'AdminHeader.php';
         
         
-        $q = "SELECT reservations_count,cat.category,m.manufacturer, mo.model,y.year,c.daily_rental_price
+        $q = "SELECT r.reservations_count,cat.category,m.manufacturer, mo.model,y.year,c.daily_rental_price
 from most_popular_cars_report r
- JOIN cars c on c.id = r.id
+ JOIN cars c on c.id = r.car_id
 JOIN car_categories cat on cat.id = c.category_id
 join make_years y on y.id = c.make_year_id
 join manufacturers m on m.id = c.manufacturer_id
 join models mo on mo.id = c.model_id
-where  r.car_id = 1
 ORDER BY reservations_count DESC
-LIMIT 10
+LIMIT 5
 ";
-                
+       
+      echo'<center><h3>Top 5 Most Popular cars that have been rented </h3></center>  ';        
                 
         $db = new Database();
         $data = $db->multiFetch($q);

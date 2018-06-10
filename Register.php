@@ -4,6 +4,35 @@ include_once 'Header.php';
 //include 'debugging.php';
 
 ?>
+<?php
+
+if (isset($_POST['submitted'])) {
+    include_once 'Users.php';
+
+    $user = new Users();
+
+    $user->setFirstName($_POST['firstName']);
+    $user->setMiddleName($_POST['middleName']);
+    $user->setLastName($_POST['lastName']);
+    $user->setEmail($_POST['email']);
+    $user->setPassword($_POST['password']);
+
+    if ($user->initWithEmail()) {
+        if ($user->registerUser()) {
+            
+            // echo '<script>window.location = "index.php"</script>';
+             
+            echo 'Thank you for registering ' . $_POST['firstName'] . ' ' . $_POST['lastName'];
+            
+        } else {
+            echo '<p class="error"> Not Successful. Please try again. </p>';
+        }
+
+    } else {
+        echo '<h1 class="error"> User Already Exists. </h1>';
+    }
+}
+?>
 
 <center>
     <div id="reg">
@@ -24,27 +53,3 @@ include_once 'Header.php';
     </div>
 </center>
 
-<?php
-
-if (isset($_POST['submitted'])) {
-    include_once 'Users.php';
-
-    $user = new Users();
-
-    $user->setFirstName($_POST['firstName']);
-    $user->setMiddleName($_POST['middleName']);
-    $user->setLastName($_POST['lastName']);
-    $user->setEmail($_POST['email']);
-    $user->setPassword($_POST['password']);
-
-    if ($user->initWithEmail()) {
-        if ($user->registerUser()) {
-            echo 'Thank you for registering ' . $_POST['firstName'] . ' ' . $_POST['lastName'];
-        } else {
-            echo '<p class="error"> Not Successful. Please try again. </p>';
-        }
-
-    } else {
-        echo '<p class="error"> Username Already Exists. </p>';
-    }
-}

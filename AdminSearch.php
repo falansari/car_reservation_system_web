@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php
-require_once 'Header.php';
+require_once 'AdminHeader.php';
 
 /*** MANUFACTURER ***/
 require_once 'models/Manufacturers.php';
@@ -32,17 +32,9 @@ require_once 'models/Cars.php';
 $cars = new Cars();
 $minPrice = $cars->minPrice();
 $maxPrice = $cars->maxPrice();
-
-
-
 ?>
 
-        
 <div id="sidebar">
-  <?php
-  
-  ?>
-    
     <center>
         <h1>Booking Search</h1>
         <p>Search available cars based on your booking dates and other criteria.</p>
