@@ -64,13 +64,6 @@ if (isset($_POST['submitted'])) {
                 $address = trim($_POST['address']);
             }
 
-            /*
-            $url = 'checkout.php?car_id=' . $car . '&startDate=' . $start . '&endDate=' . $end .
-                '&firstName=' . $firstName . '&middleName=' . $middleName . '&lastName=' . $lastName .
-                '&nationality=' . $nationality . '&cpr=' . $cpr . '&phone=' . $phone . '&address=' . $address .
-                '&accessoriesList[]=' . $accessories . '';
-            header("Location: " . $url . ""); // Redirect browser
-            exit();*/
             ?>
             <form action="checkout.php" method="POST" id="toCheckout">
                 <input type="hidden" name="car_id" value="<?php echo $car_id; ?>">

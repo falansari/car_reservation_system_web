@@ -10,55 +10,42 @@
 include_once 'Header.php';
 if (isset($_POST['car_id'])) {
     $car_id = trim($_POST['car_id']);
-    var_dump('car: ' . $car_id);
 }
 if (!empty($_POST['accessoriesList'])) {
     $accessories = $_POST['accessoriesList'];
-    var_dump($accessories);
 }
 if (isset($_POST['startDate'])) {
     $startDate = trim($_POST['startDate']);
-    var_dump('start: ' . $startDate);
 }
 if (isset($_POST['endDate'])) {
     $endDate = trim($_POST['endDate']);
-    var_dump('end: ' . $endDate);
 }
 if (isset($_POST['firstName'])) {
     $firstName = trim($_POST['firstName']);
-    var_dump('first: ' . $firstName);
 }
 if (isset($_POST['middleName'])) {
     $middleName = trim($_POST['middleName']);
-    var_dump('middle: ' . $middleName);
 }
 if (isset($_POST['lastName'])) {
     $lastName = trim($_POST['lastName']);
-    var_dump('last: ' . $lastName);
 }
 if (isset($_POST['nationality'])) {
     $nationality = trim($_POST['nationality']);
-    var_dump('nationality: ' . $nationality);
 }
 if (isset($_POST['cpr'])) {
     $cpr = trim($_POST['cpr']);
-    var_dump('cpr: ' . $cpr);
 }
 if (isset($_POST['phone'])) {
     $phone = trim($_POST['phone']);
-    var_dump('phone: ' . $phone);
 }
 if (isset($_POST['address'])) {
     $address = trim($_POST['address']);
-    var_dump('address: ' . $address);
 }
 if (isset($_POST['totalDays'])) {
     $totalDays = trim($_POST['totalDays']);
-    var_dump('total days: ' . $totalDays);
 }
 if (isset($_POST['totalCost'])) {
     $totalCost = trim($_POST['totalCost']);
-    var_dump('total cost: ' . $totalCost);
 }
 
 include_once 'models/PaymentTypes.php';
