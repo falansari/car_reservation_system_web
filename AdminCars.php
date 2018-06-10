@@ -72,7 +72,7 @@ join models mo on mo.id = c.model_id
                 for ($i = 0; $i < $row_cnt; $i++) {
                     $bg = ($bg == '#f2f2f2' ? '#f2f2f2' : '#f2f2f2');
 $img = $data[$i]->image;
-$img = '<img src="data:image/jpg;base64,'.base64_encode( $img ).'" height="100px" width="120px"/>';
+$img = '<img src="data:image/jpg;base64,'.base64_encode( $img ).'" width="200px"/>';
                     $table .= '<tr bgcolor="' . $bg . '">
                         <center>
                         <td><a href="EditCars.php?id=' .  $data[$i]->id . '">Edit</a></td>

@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
 $car = $cars->getCar($id);
 
 $image = $car->image;
-$image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '"/>';
+$image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '" width="200px"/>';
 ?>
 <html>
     <head>

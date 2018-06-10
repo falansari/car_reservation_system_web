@@ -51,7 +51,7 @@ include_once 'models/Cars.php';
 $cars = new Cars();
 $car = $cars->getCar($car_id);
 $image = $car->image;
-$image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '"/>';
+$image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '" width="200px"/>';
 $totalRentalCar = $cars->totalRental($car_id, $startDate, $endDate);
 
 if (!empty($accessoriesList)) {

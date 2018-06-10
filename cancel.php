@@ -29,35 +29,32 @@
             
             $foundReservation = findReservation($code);
             
-            
+            if ($foundReservation != NULL)
+            {
+                include_once 'models/Reservations.php';
+                $reservations = new Reservations();
+                $reservations->delete($code);
+                echo "<script type='text/javascript'>location.href = 'index.php?deleted=true';</script>";
+            }
             ?>
-            <form action="ReservationDetails.php" method="post" id="code">
-                <input type="hidden" name="reservationCode" value="<?php echo $code; ?>" />
-            </form>
 
     <?php
 }
 ?>
     <center>
         <div id="reg">
-            <h1>Search Reservation</h1>
-            <form action="searchReservation.php" method="post">
+            <h1>Cancel Reservation</h1>
+            <form action="cancel.php" method="post">
                 <table>
                     <tr><td><h4>Reservation Code: </h4><td> <input type="text" name="reservation" size="20" value="" />
 
                 </table>
                 <div align="center">
-                    <input type ="submit" class ="Button SubButton" value ="search" />
+                    <input type ="submit" class ="Button SubButton" value ="cancel" />
                 </div>
                 <input type="hidden" name="submitted" value="1" />
             </form>
         </div>
     </center>
-
 </body>
-<script>
-    if (code) {
-        document.forms["code"].submit();
-    }
-</script>
 </html>

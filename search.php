@@ -110,7 +110,7 @@ if (!empty($dataRows)) {
     }
     for ($i = 0; $i < $display; $i++) {
         $image = $dataRows[$i]->image;
-        $image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '"/>';
+        $image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '" width="200px"/>';
         echo '<tr>
         <td>' . $image . '</td>
         <td>' . $dataRows[$i]->model . ' ' . $dataRows[$i]->year . '</td>

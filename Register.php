@@ -22,7 +22,7 @@ if (isset($_POST['submitted'])) {
             
             // echo '<script>window.location = "index.php"</script>';
              
-            echo 'Thank you for registering ' . $_POST['firstName'] . ' ' . $_POST['lastName'];
+            echo '<h1>Thank you for registering ' . $_POST['firstName'] . ' ' . $_POST['lastName'].'</h1>';
             
         } else {
             echo '<p class="error"> Not Successful. Please try again. </p>';

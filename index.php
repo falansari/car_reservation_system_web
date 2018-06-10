@@ -35,6 +35,15 @@ include_once 'models/Cars.php';
 $cars = new Cars();
 $minPrice = $cars->minPrice();
 $maxPrice = $cars->maxPrice();
+
+if (isset($_GET['deleted']))
+{
+    $deletedReservation = trim($_GET['deleted']);
+    if ($deletedReservation == TRUE)
+    {
+        echo '<h3>You have successfully cancelled your reservation.</h3>';
+    }
+}
 ?>
         
 <div id="sidebar">

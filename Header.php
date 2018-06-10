@@ -18,7 +18,8 @@ $role = $_SESSION["role"];
         <li><a  href="index.php"><i class="fa fa-home"> Home</i></a></li>
         <li><a href="About.php"> About Us</a></li>
         <li><a href="contactUs.php">Contact Us</a></li>
-        
+        <li><a href="searchReservation.php">Search Reservation</a></li>
+        <li><a href="cancel.php">Cancel Reservation</a></li>
         <li style="float:right"><a href="AdminHome.php"><span class="fas fa-sign-in-alt"> Admin Dashboard</span></a></li>
        <li style="float:right"><a href="logout.php"><span class="fas fa-sign-in-alt"> Logout</span></a></li>
        
@@ -39,6 +40,7 @@ $role = $_SESSION["role"];
         <li><a href="About.php"> About Us</a></li>
         <li><a href="contactUs.php">Contact Us</a></li>
         <li><a href="searchReservation.php">Search Reservation</a></li>
+        <li><a href="cancel.php">Cancel Reservation</a></li>
         
        <li style="float:right"><a href="LoginPage.php"><span class="fas fa-sign-in-alt"> Login</span></a></li>
         

@@ -82,13 +82,13 @@ $reservationData = $reservations->reservationDetails($newReservation);
 $reservationAccessories = $reservations->reservationAccessories($newReservation);
 
 $image = $reservationData->image;
-$image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '"/>';
+$image = '<img src="data:image/jpg;base64,' . base64_encode($image) . '" width="200px"/>';
 ?>
 <center>
 <div id="aboutsidebar" class="overflow">
     <h1>Summary</h1>
     <h4>Reservation Code <?php echo $reservationData->id; ?></h4>
-    <form action="payment.php" method="POST">
+    <form>
                 <fieldset>
                     <legend>Reservation Details:</legend>
                     <div class="row">

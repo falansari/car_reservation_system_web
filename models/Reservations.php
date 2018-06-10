@@ -530,4 +530,15 @@ class Reservations
         return $data;
     }
 
+    /**
+     * Delete cancelled reservation from db
+     * @param   INT     $id     Required. Reservation id.
+     */
+    public function delete($id)
+    {
+        $db = Database::getInstance();
+        $sql = "DELETE FROM reservations WHERE reservations.id = $id";
+        $sql = $db->querySql($sql);
+    }
+
 }
