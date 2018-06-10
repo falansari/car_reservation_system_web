@@ -20,7 +20,7 @@
 
                 $data = $db->singleFetch($q);
                 if ($data != null) {
-                    return $data;
+                    return $data->id;
                 } else {
                     Echo "Reservation Code: $code does not exist";
                 }

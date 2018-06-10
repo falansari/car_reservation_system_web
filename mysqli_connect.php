@@ -1,5 +1,4 @@
 <?php
-//include 'header.php';
 
 class Database1
 {
@@ -9,7 +8,8 @@ class Database1
     public function getDBConnection() {
 
         if ($this->dbc == NULL)
-            $this->dbc = mysqli_connect('localhost','root','', 'car_reservation_system');
+            $this->dbc = mysqli_connect('10.31.40.60','20900029','20900029', '20900029');
+            //$this->dbc = mysqli_connect('localhost','root','', 'car_reservation_system');
 
         if (mysqli_connect_errno()) {
             printf("Connect failed: %s\n", mysqli_connect_error());
@@ -36,20 +36,4 @@ class Database1
 
      
  }
-
-/* this file should be stored outside of the web directory for security purposes - this will
- * prevent a web browser from being able to see it
- */
-
-//print_r($dbc);
-
-/*$mySQL = 'SELECT * from test.Users;';
-$res = mysqli_query($mySQL, $dbc);
-
-if($res == FALSE)
-    echo "Query Failed";
-
-mysqli_close($dbc) or die('close db failed');
-  
- */
 ?>

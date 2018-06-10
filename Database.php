@@ -60,7 +60,8 @@ class Database
     public function connect()
     {
         $this->dblink = mysqli_connect(
-            'localhost', 'root', '', 'car_reservation_system'
+            '10.31.40.60', '20900029', '20900029', '20900029'
+            //'localhost','root','', 'car_reservation_system'
         )
         or die('CAN NOT CONNECT');
     }

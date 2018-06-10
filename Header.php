@@ -52,5 +52,3 @@ $role = $_SESSION["role"];
     ?>
         
 </div>
-</body>
-</html>

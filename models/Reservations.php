@@ -1,6 +1,10 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/Database.php';
-
+if ($_SERVER['DOCUMENT_ROOT'] . '/Database.php')
+{
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/Database.php';
+} else {
+    include_once '../Database.php';
+}
 /**
  * PHP version 5.6
  *
@@ -445,7 +449,8 @@ class Reservations
             $cardExpiry = DateTime::createFromFormat('m-Y', $cardExpiry)->format('m-Y');
         }
 
-        $mysqli = new mysqli('localhost', 'root', '', 'car_reservation_system');
+        $mysqli = new mysqli('10.31.40.60', '20900029', '20900029', '20900029');
+        //$mysqli = new mysqli('localhost','root','', 'car_reservation_system');
 
         if ($cardProvider == null || $cardProvider == 0) {
             $reservationSql = "INSERT INTO `reservations` (`id`, `payment_type_id`, `country_id`,

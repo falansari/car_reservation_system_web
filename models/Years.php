@@ -1,6 +1,10 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/Database.php';
-
+if ($_SERVER['DOCUMENT_ROOT'] . '/Database.php')
+{
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/Database.php';
+} else {
+    include_once '../Database.php';
+}
 /**
  * PHP version 5.6
  *

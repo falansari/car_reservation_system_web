@@ -19,10 +19,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `car_reservation_system`
+-- Database: `20900029`
 --
-CREATE DATABASE IF NOT EXISTS `car_reservation_system` DEFAULT CHARACTER SET latin1 COLLATE latin1_general_ci;
-USE `car_reservation_system`;
+USE `20900029`;
 
 -- --------------------------------------------------------
 
@@ -41,7 +40,7 @@ CREATE TABLE `accessories` (
   `reserved_qty` int(11) NOT NULL COMMENT 'quantities used in ongoing reservations',
   `total_qty` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -52,18 +51,18 @@ CREATE TABLE `accessories` (
 -- Dumping data for table `accessories`
 --
 
-INSERT INTO `accessories` (`id`, `accessory`, `daily_rental_price`, `available_qty`, `reserved_qty`, `total_qty`, `created_at`, `updated_at`) VALUES
-(1, 'Infant Car Seat', '1.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:41:30'),
-(2, 'Child Car Seat', '1.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:41:39'),
-(3, 'Booster Car Seat', '1.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:41:48'),
-(4, 'Screen', '1.000', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:42:05'),
-(5, 'Car GPS System', '3.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:42:19'),
-(6, 'Ski Racks', '4.500', 10, 0, 10, CURRENT_TIMESTAMP, '2018-06-08 09:42:54'),
-(7, 'Snow Tires', '4.000', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:42:39'),
-(8, 'Winter Tires', '4.000', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:42:46'),
-(9, 'Summer Tires', '2.500', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:43:05'),
-(10, 'All-Terrain Tires', '3.000', 40, 0, 40, CURRENT_TIMESTAMP, '2018-06-08 09:43:15'),
-(11, 'Car Insurance', '2.000', 100, 0, 100, CURRENT_TIMESTAMP, '2018-06-08 09:43:27');
+INSERT INTO `accessories` (`id`, `accessory`, `daily_rental_price`, `available_qty`, `reserved_qty`, `total_qty`) VALUES
+(1, 'Infant Car Seat', '1.500', 10, 0, 10),
+(2, 'Child Car Seat', '1.500', 10, 0, 10),
+(3, 'Booster Car Seat', '1.500', 10, 0, 10),
+(4, 'Screen', '1.000', 10, 0, 10),
+(5, 'Car GPS System', '3.500', 10, 0, 10),
+(6, 'Ski Racks', '4.500', 10, 0, 10),
+(7, 'Snow Tires', '4.000', 40, 0, 40),
+(8, 'Winter Tires', '4.000', 40, 0, 40),
+(9, 'Summer Tires', '2.500', 40, 0, 40),
+(10, 'All-Terrain Tires', '3.000', 40, 0, 40),
+(11, 'Car Insurance', '2.000', 100, 0, 100);
 
 -- --------------------------------------------------------
 
@@ -78,7 +77,7 @@ CREATE TABLE `card_providers` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `card_provider` varchar(30) COLLATE latin1_general_ci NOT NULL COMMENT 'e.g. Visa, MasterCard',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -89,10 +88,10 @@ CREATE TABLE `card_providers` (
 -- Dumping data for table `card_providers`
 --
 
-INSERT INTO `card_providers` (`id`, `card_provider`, `created_at`, `updated_at`) VALUES
-(1, 'Visa', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'MasterCard', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 'American Express', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `card_providers` (`id`, `card_provider`) VALUES
+(1, 'Visa'),
+(2, 'MasterCard'),
+(3, 'American Express');
 
 -- --------------------------------------------------------
 
@@ -112,7 +111,7 @@ CREATE TABLE `cars` (
   `daily_rental_price` decimal(6,3) NOT NULL,
   `image` blob,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -131,11 +130,11 @@ CREATE TABLE `cars` (
 -- Dumping data for table `cars`
 --
 
-INSERT INTO `cars` (`id`, `manufacturer_id`, `model_id`, `make_year_id`, `category_id`, `daily_rental_price`, `created_at`, `updated_at`) VALUES
-(1, 6, 57, 29, 4, '10.000', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
-INSERT INTO `cars` (`id`, `manufacturer_id`, `model_id`, `make_year_id`, `category_id`, `daily_rental_price`, `created_at`, `updated_at`) VALUES
-(2, 13, 2, 29, 7, '6.000', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 2, 10, 24, 9, '30.000', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `cars` (`id`, `manufacturer_id`, `model_id`, `make_year_id`, `category_id`, `daily_rental_price`) VALUES
+(1, 6, 57, 29, 4, '10.000');
+INSERT INTO `cars` (`id`, `manufacturer_id`, `model_id`, `make_year_id`, `category_id`, `daily_rental_price`) VALUES
+(2, 13, 2, 29, 7, '6.000'),
+(3, 2, 10, 24, 9, '30.000');
 
 --
 -- Triggers `cars`
@@ -161,7 +160,7 @@ CREATE TABLE `car_categories` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `category` char(20) COLLATE latin1_general_ci NOT NULL COMMENT 'e.g. SUV, Sedan, Hatchback',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -172,20 +171,20 @@ CREATE TABLE `car_categories` (
 -- Dumping data for table `car_categories`
 --
 
-INSERT INTO `car_categories` (`id`, `category`, `created_at`, `updated_at`) VALUES
-(1, 'Hatchback', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'Sedan Subcompact', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 'Sedan Compact', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(4, 'Sedan Mid-size', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 'Sedan Large', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(6, 'MPV', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(7, 'SUV', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(8, 'Crossover', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(9, 'Coupe', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 'Convertible', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(11, 'Minivan', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(12, 'Van', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(13, 'Pickup Truck', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `car_categories` (`id`, `category`) VALUES
+(1, 'Hatchback'),
+(2, 'Sedan Subcompact'),
+(3, 'Sedan Compact'),
+(4, 'Sedan Mid-size'),
+(5, 'Sedan Large'),
+(6, 'MPV'),
+(7, 'SUV'),
+(8, 'Crossover'),
+(9, 'Coupe'),
+(10, 'Convertible'),
+(11, 'Minivan'),
+(12, 'Van'),
+(13, 'Pickup Truck');
 
 -- --------------------------------------------------------
 
@@ -204,7 +203,7 @@ CREATE TABLE `countries` (
   `country_name_ar` varchar(50) CHARACTER SET utf8 NOT NULL,
   `country_nationality_ar` varchar(50) CHARACTER SET utf8 NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -215,254 +214,254 @@ CREATE TABLE `countries` (
 -- Dumping data for table `countries`
 --
 
-INSERT INTO `countries` (`id`, `country_code`, `country_name_en`, `country_nationality_en`, `country_name_ar`, `country_nationality_ar`, `created_at`, `updated_at`) VALUES
-(1, 'AF', 'Afghanistan', 'Afghan', 'أفغانستان', 'أفغانستاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'AL', 'Albania', 'Albanian', 'ألبانيا', 'ألباني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 'AX', 'Aland Islands', 'Aland Islander', 'جزر آلاند', 'آلاندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(4, 'DZ', 'Algeria', 'Algerian', 'الجزائر', 'جزائري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 'AS', 'American Samoa', 'American Samoan', 'ساموا-الأمريكي', 'أمريكي سامواني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(6, 'AD', 'Andorra', 'Andorran', 'أندورا', 'أندوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(7, 'AO', 'Angola', 'Angolan', 'أنغولا', 'أنقولي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(8, 'AI', 'Anguilla', 'Anguillan', 'أنغويلا', 'أنغويلي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(9, 'AQ', 'Antarctica', 'Antarctican', 'أنتاركتيكا', 'أنتاركتيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 'AG', 'Antigua and Barbuda', 'Antiguan', 'أنتيغوا وبربودا', 'بربودي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(11, 'AR', 'Argentina', 'Argentinian', 'الأرجنتين', 'أرجنتيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(12, 'AM', 'Armenia', 'Armenian', 'أرمينيا', 'أرميني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(13, 'AW', 'Aruba', 'Aruban', 'أروبه', 'أوروبهيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(14, 'AU', 'Australia', 'Australian', 'أستراليا', 'أسترالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(15, 'AT', 'Austria', 'Austrian', 'النمسا', 'نمساوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(16, 'AZ', 'Azerbaijan', 'Azerbaijani', 'أذربيجان', 'أذربيجاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(17, 'BS', 'Bahamas', 'Bahamian', 'الباهاماس', 'باهاميسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(18, 'BH', 'Bahrain', 'Bahraini', 'البحرين', 'بحريني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(19, 'BD', 'Bangladesh', 'Bangladeshi', 'بنغلاديش', 'بنغلاديشي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(20, 'BB', 'Barbados', 'Barbadian', 'بربادوس', 'بربادوسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(21, 'BY', 'Belarus', 'Belarusian', 'روسيا البيضاء', 'روسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(22, 'BE', 'Belgium', 'Belgian', 'بلجيكا', 'بلجيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(23, 'BZ', 'Belize', 'Belizean', 'بيليز', 'بيليزي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(24, 'BJ', 'Benin', 'Beninese', 'بنين', 'بنيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(25, 'BL', 'Saint Barthelemy', 'Saint Barthelmian', 'سان بارتيلمي', 'سان بارتيلمي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(26, 'BM', 'Bermuda', 'Bermudan', 'جزر برمودا', 'برمودي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(27, 'BT', 'Bhutan', 'Bhutanese', 'بوتان', 'بوتاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(28, 'BO', 'Bolivia', 'Bolivian', 'بوليفيا', 'بوليفي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(29, 'BA', 'Bosnia and Herzegovina', 'Bosnian / Herzegovinian', 'البوسنة و الهرسك', 'بوسني/هرسكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(30, 'BW', 'Botswana', 'Botswanan', 'بوتسوانا', 'بوتسواني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(31, 'BV', 'Bouvet Island', 'Bouvetian', 'جزيرة بوفيه', 'بوفيهي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(32, 'BR', 'Brazil', 'Brazilian', 'البرازيل', 'برازيلي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(33, 'IO', 'British Indian Ocean Territory', 'British Indian Ocean Territory', 'إقليم المحيط الهندي البريطاني', 'إقليم المحيط الهندي البريطاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(34, 'BN', 'Brunei Darussalam', 'Bruneian', 'بروني', 'بروني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(35, 'BG', 'Bulgaria', 'Bulgarian', 'بلغاريا', 'بلغاري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(36, 'BF', 'Burkina Faso', 'Burkinabe', 'بوركينا فاسو', 'بوركيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(37, 'BI', 'Burundi', 'Burundian', 'بوروندي', 'بورونيدي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(38, 'KH', 'Cambodia', 'Cambodian', 'كمبوديا', 'كمبودي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(39, 'CM', 'Cameroon', 'Cameroonian', 'كاميرون', 'كاميروني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(40, 'CA', 'Canada', 'Canadian', 'كندا', 'كندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(41, 'CV', 'Cape Verde', 'Cape Verdean', 'الرأس الأخضر', 'الرأس الأخضر', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(42, 'KY', 'Cayman Islands', 'Caymanian', 'جزر كايمان', 'كايماني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(43, 'CF', 'Central African Republic', 'Central African', 'جمهورية أفريقيا الوسطى', 'أفريقي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(44, 'TD', 'Chad', 'Chadian', 'تشاد', 'تشادي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(45, 'CL', 'Chile', 'Chilean', 'شيلي', 'شيلي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(46, 'CN', 'China', 'Chinese', 'الصين', 'صيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(47, 'CX', 'Christmas Island', 'Christmas Islander', 'جزيرة عيد الميلاد', 'جزيرة عيد الميلاد', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(48, 'CC', 'Cocos (Keeling) Islands', 'Cocos Islander', 'جزر كوكوس', 'جزر كوكوس', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(49, 'CO', 'Colombia', 'Colombian', 'كولومبيا', 'كولومبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(50, 'KM', 'Comoros', 'Comorian', 'جزر القمر', 'جزر القمر', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(51, 'CG', 'Congo', 'Congolese', 'الكونغو', 'كونغي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(52, 'CK', 'Cook Islands', 'Cook Islander', 'جزر كوك', 'جزر كوك', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(53, 'CR', 'Costa Rica', 'Costa Rican', 'كوستاريكا', 'كوستاريكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(54, 'HR', 'Croatia', 'Croatian', 'كرواتيا', 'كوراتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(55, 'CU', 'Cuba', 'Cuban', 'كوبا', 'كوبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(56, 'CY', 'Cyprus', 'Cypriot', 'قبرص', 'قبرصي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(57, 'CW', 'Curaçao', 'Curacian', 'كوراساو', 'كوراساوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(58, 'CZ', 'Czech Republic', 'Czech', 'الجمهورية التشيكية', 'تشيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(59, 'DK', 'Denmark', 'Danish', 'الدانمارك', 'دنماركي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(60, 'DJ', 'Djibouti', 'Djiboutian', 'جيبوتي', 'جيبوتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(61, 'DM', 'Dominica', 'Dominican', 'دومينيكا', 'دومينيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(62, 'DO', 'Dominican Republic', 'Dominican', 'الجمهورية الدومينيكية', 'دومينيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(63, 'EC', 'Ecuador', 'Ecuadorian', 'إكوادور', 'إكوادوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(64, 'EG', 'Egypt', 'Egyptian', 'مصر', 'مصري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(65, 'SV', 'El Salvador', 'Salvadoran', 'إلسلفادور', 'سلفادوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(66, 'GQ', 'Equatorial Guinea', 'Equatorial Guinean', 'غينيا الاستوائي', 'غيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(67, 'ER', 'Eritrea', 'Eritrean', 'إريتريا', 'إريتيري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(68, 'EE', 'Estonia', 'Estonian', 'استونيا', 'استوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(69, 'ET', 'Ethiopia', 'Ethiopian', 'أثيوبيا', 'أثيوبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(70, 'FK', 'Falkland Islands (Malvinas)', 'Falkland Islander', 'جزر فوكلاند', 'فوكلاندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(71, 'FO', 'Faroe Islands', 'Faroese', 'جزر فارو', 'جزر فارو', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(72, 'FJ', 'Fiji', 'Fijian', 'فيجي', 'فيجي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(73, 'FI', 'Finland', 'Finnish', 'فنلندا', 'فنلندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(74, 'FR', 'France', 'French', 'فرنسا', 'فرنسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(75, 'GF', 'French Guiana', 'French Guianese', 'غويانا الفرنسية', 'غويانا الفرنسية', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(76, 'PF', 'French Polynesia', 'French Polynesian', 'بولينيزيا الفرنسية', 'بولينيزيي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(77, 'TF', 'French Southern and Antarctic Lands', 'French', 'أراض فرنسية جنوبية وأنتارتيكية', 'أراض فرنسية جنوبية وأنتارتيكية', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(78, 'GA', 'Gabon', 'Gabonese', 'الغابون', 'غابوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(79, 'GM', 'Gambia', 'Gambian', 'غامبيا', 'غامبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(80, 'GE', 'Georgia', 'Georgian', 'جيورجيا', 'جيورجي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(81, 'DE', 'Germany', 'German', 'ألمانيا', 'ألماني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(82, 'GH', 'Ghana', 'Ghanaian', 'غانا', 'غاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(83, 'GI', 'Gibraltar', 'Gibraltar', 'جبل طارق', 'جبل طارق', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(84, 'GG', 'Guernsey', 'Guernsian', 'غيرنزي', 'غيرنزي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(85, 'GR', 'Greece', 'Greek', 'اليونان', 'يوناني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(86, 'GL', 'Greenland', 'Greenlandic', 'جرينلاند', 'جرينلاندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(87, 'GD', 'Grenada', 'Grenadian', 'غرينادا', 'غرينادي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(88, 'GP', 'Guadeloupe', 'Guadeloupe', 'جزر جوادلوب', 'جزر جوادلوب', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(89, 'GU', 'Guam', 'Guamanian', 'جوام', 'جوامي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(90, 'GT', 'Guatemala', 'Guatemalan', 'غواتيمال', 'غواتيمالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(91, 'GN', 'Guinea', 'Guinean', 'غينيا', 'غيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(92, 'GW', 'Guinea-Bissau', 'Guinea-Bissauan', 'غينيا-بيساو', 'غيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(93, 'GY', 'Guyana', 'Guyanese', 'غيانا', 'غياني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(94, 'HT', 'Haiti', 'Haitian', 'هايتي', 'هايتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(95, 'HM', 'Heard and Mc Donald Islands', 'Heard and Mc Donald Islanders', 'جزيرة هيرد وجزر ماكدونالد', 'جزيرة هيرد وجزر ماكدونالد', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(96, 'HN', 'Honduras', 'Honduran', 'هندوراس', 'هندوراسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(97, 'HK', 'Hong Kong', 'Hongkongese', 'هونغ كونغ', 'هونغ كونغي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(98, 'HU', 'Hungary', 'Hungarian', 'المجر', 'مجري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(99, 'IS', 'Iceland', 'Icelandic', 'آيسلندا', 'آيسلندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(100, 'IN', 'India', 'Indian', 'الهند', 'هندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(101, 'IM', 'Isle of Man', 'Manx', 'جزيرة مان', 'ماني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(102, 'ID', 'Indonesia', 'Indonesian', 'أندونيسيا', 'أندونيسيي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(103, 'IR', 'Iran', 'Iranian', 'إيران', 'إيراني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(104, 'IQ', 'Iraq', 'Iraqi', 'العراق', 'عراقي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(105, 'IE', 'Ireland', 'Irish', 'إيرلندا', 'إيرلندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(106, 'IL', 'Israel', 'Israeli', 'إسرائيل', 'إسرائيلي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(107, 'IT', 'Italy', 'Italian', 'إيطاليا', 'إيطالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(108, 'CI', 'Ivory Coast', 'Ivory Coastian', 'ساحل العاج', 'ساحل العاج', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(109, 'JE', 'Jersey', 'Jersian', 'جيرزي', 'جيرزي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(110, 'JM', 'Jamaica', 'Jamaican', 'جمايكا', 'جمايكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(111, 'JP', 'Japan', 'Japanese', 'اليابان', 'ياباني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(112, 'JO', 'Jordan', 'Jordanian', 'الأردن', 'أردني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(113, 'KZ', 'Kazakhstan', 'Kazakh', 'كازاخستان', 'كازاخستاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(114, 'KE', 'Kenya', 'Kenyan', 'كينيا', 'كيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(115, 'KI', 'Kiribati', 'I-Kiribati', 'كيريباتي', 'كيريباتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(116, 'KP', 'Korea(North Korea)', 'North Korean', 'كوريا الشمالية', 'كوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(117, 'KR', 'Korea(South Korea)', 'South Korean', 'كوريا الجنوبية', 'كوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(118, 'XK', 'Kosovo', 'Kosovar', 'كوسوفو', 'كوسيفي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(119, 'KW', 'Kuwait', 'Kuwaiti', 'الكويت', 'كويتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(120, 'KG', 'Kyrgyzstan', 'Kyrgyzstani', 'قيرغيزستان', 'قيرغيزستاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(121, 'LA', 'Lao PDR', 'Laotian', 'لاوس', 'لاوسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(122, 'LV', 'Latvia', 'Latvian', 'لاتفيا', 'لاتيفي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(123, 'LB', 'Lebanon', 'Lebanese', 'لبنان', 'لبناني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(124, 'LS', 'Lesotho', 'Basotho', 'ليسوتو', 'ليوسيتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(125, 'LR', 'Liberia', 'Liberian', 'ليبيريا', 'ليبيري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(126, 'LY', 'Libya', 'Libyan', 'ليبيا', 'ليبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(127, 'LI', 'Liechtenstein', 'Liechtenstein', 'ليختنشتين', 'ليختنشتيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(128, 'LT', 'Lithuania', 'Lithuanian', 'لتوانيا', 'لتوانيي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(129, 'LU', 'Luxembourg', 'Luxembourger', 'لوكسمبورغ', 'لوكسمبورغي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(130, 'LK', 'Sri Lanka', 'Sri Lankian', 'سريلانكا', 'سريلانكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(131, 'MO', 'Macau', 'Macanese', 'ماكاو', 'ماكاوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(132, 'MK', 'Macedonia', 'Macedonian', 'مقدونيا', 'مقدوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(133, 'MG', 'Madagascar', 'Malagasy', 'مدغشقر', 'مدغشقري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(134, 'MW', 'Malawi', 'Malawian', 'مالاوي', 'مالاوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(135, 'MY', 'Malaysia', 'Malaysian', 'ماليزيا', 'ماليزي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(136, 'MV', 'Maldives', 'Maldivian', 'المالديف', 'مالديفي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(137, 'ML', 'Mali', 'Malian', 'مالي', 'مالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(138, 'MT', 'Malta', 'Maltese', 'مالطا', 'مالطي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(139, 'MH', 'Marshall Islands', 'Marshallese', 'جزر مارشال', 'مارشالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(140, 'MQ', 'Martinique', 'Martiniquais', 'مارتينيك', 'مارتينيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(141, 'MR', 'Mauritania', 'Mauritanian', 'موريتانيا', 'موريتانيي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(142, 'MU', 'Mauritius', 'Mauritian', 'موريشيوس', 'موريشيوسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(143, 'YT', 'Mayotte', 'Mahoran', 'مايوت', 'مايوتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(144, 'MX', 'Mexico', 'Mexican', 'المكسيك', 'مكسيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(145, 'FM', 'Micronesia', 'Micronesian', 'مايكرونيزيا', 'مايكرونيزيي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(146, 'MD', 'Moldova', 'Moldovan', 'مولدافيا', 'مولديفي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(147, 'MC', 'Monaco', 'Monacan', 'موناكو', 'مونيكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(148, 'MN', 'Mongolia', 'Mongolian', 'منغوليا', 'منغولي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(149, 'ME', 'Montenegro', 'Montenegrin', 'الجبل الأسود', 'الجبل الأسود', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(150, 'MS', 'Montserrat', 'Montserratian', 'مونتسيرات', 'مونتسيراتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(151, 'MA', 'Morocco', 'Moroccan', 'المغرب', 'مغربي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(152, 'MZ', 'Mozambique', 'Mozambican', 'موزمبيق', 'موزمبيقي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(153, 'MM', 'Myanmar', 'Myanmarian', 'ميانمار', 'ميانماري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(154, 'NA', 'Namibia', 'Namibian', 'ناميبيا', 'ناميبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(155, 'NR', 'Nauru', 'Nauruan', 'نورو', 'نوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(156, 'NP', 'Nepal', 'Nepalese', 'نيبال', 'نيبالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(157, 'NL', 'Netherlands', 'Dutch', 'هولندا', 'هولندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(158, 'AN', 'Netherlands Antilles', 'Dutch Antilier', 'جزر الأنتيل الهولندي', 'هولندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(159, 'NC', 'New Caledonia', 'New Caledonian', 'كاليدونيا الجديدة', 'كاليدوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(160, 'NZ', 'New Zealand', 'New Zealander', 'نيوزيلندا', 'نيوزيلندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(161, 'NI', 'Nicaragua', 'Nicaraguan', 'نيكاراجوا', 'نيكاراجوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(162, 'NE', 'Niger', 'Nigerien', 'النيجر', 'نيجيري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(163, 'NG', 'Nigeria', 'Nigerian', 'نيجيريا', 'نيجيري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(164, 'NU', 'Niue', 'Niuean', 'ني', 'ني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(165, 'NF', 'Norfolk Island', 'Norfolk Islander', 'جزيرة نورفولك', 'نورفوليكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(166, 'MP', 'Northern Mariana Islands', 'Northern Marianan', 'جزر ماريانا الشمالية', 'ماريني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(167, 'NO', 'Norway', 'Norwegian', 'النرويج', 'نرويجي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(168, 'OM', 'Oman', 'Omani', 'عمان', 'عماني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(169, 'PK', 'Pakistan', 'Pakistani', 'باكستان', 'باكستاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(170, 'PW', 'Palau', 'Palauan', 'بالاو', 'بالاوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(171, 'PS', 'Palestine', 'Palestinian', 'فلسطين', 'فلسطيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(172, 'PA', 'Panama', 'Panamanian', 'بنما', 'بنمي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(173, 'PG', 'Papua New Guinea', 'Papua New Guinean', 'بابوا غينيا الجديدة', 'بابوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(174, 'PY', 'Paraguay', 'Paraguayan', 'باراغواي', 'بارغاوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(175, 'PE', 'Peru', 'Peruvian', 'بيرو', 'بيري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(176, 'PH', 'Philippines', 'Filipino', 'الفليبين', 'فلبيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(177, 'PN', 'Pitcairn', 'Pitcairn Islander', 'بيتكيرن', 'بيتكيرني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(178, 'PL', 'Poland', 'Polish', 'بولونيا', 'بوليني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(179, 'PT', 'Portugal', 'Portuguese', 'البرتغال', 'برتغالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(180, 'PR', 'Puerto Rico', 'Puerto Rican', 'بورتو ريكو', 'بورتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(181, 'QA', 'Qatar', 'Qatari', 'قطر', 'قطري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(182, 'RE', 'Reunion Island', 'Reunionese', 'ريونيون', 'ريونيوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(183, 'RO', 'Romania', 'Romanian', 'رومانيا', 'روماني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(184, 'RU', 'Russian', 'Russian', 'روسيا', 'روسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(185, 'RW', 'Rwanda', 'Rwandan', 'رواندا', 'رواندا', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(186, 'KN', 'Saint Kitts and Nevis', 'Kittitian/Nevisian', 'سانت كيتس ونيفس,', 'سانت كيتس ونيفس', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(187, 'MF', 'Saint Martin (French part)', 'St. Martian(French)', 'ساينت مارتن فرنسي', 'ساينت مارتني فرنسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(188, 'SX', 'Sint Maarten (Dutch part)', 'St. Martian(Dutch)', 'ساينت مارتن هولندي', 'ساينت مارتني هولندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(189, 'LC', 'Saint Pierre and Miquelon', 'St. Pierre and Miquelon', 'سان بيير وميكلون', 'سان بيير وميكلوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(190, 'VC', 'Saint Vincent and the Grenadines', 'Saint Vincent and the Grenadines', 'سانت فنسنت وجزر غرينادين', 'سانت فنسنت وجزر غرينادين', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(191, 'WS', 'Samoa', 'Samoan', 'ساموا', 'ساموي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(192, 'SM', 'San Marino', 'Sammarinese', 'سان مارينو', 'ماريني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(193, 'ST', 'Sao Tome and Principe', 'Sao Tomean', 'ساو تومي وبرينسيبي', 'ساو تومي وبرينسيبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(194, 'SA', 'Saudi Arabia', 'Saudi Arabian', 'المملكة العربية السعودية', 'سعودي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(195, 'SN', 'Senegal', 'Senegalese', 'السنغال', 'سنغالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(196, 'RS', 'Serbia', 'Serbian', 'صربيا', 'صربي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(197, 'SC', 'Seychelles', 'Seychellois', 'سيشيل', 'سيشيلي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(198, 'SL', 'Sierra Leone', 'Sierra Leonean', 'سيراليون', 'سيراليوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(199, 'SG', 'Singapore', 'Singaporean', 'سنغافورة', 'سنغافوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(200, 'SK', 'Slovakia', 'Slovak', 'سلوفاكيا', 'سولفاكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(201, 'SI', 'Slovenia', 'Slovenian', 'سلوفينيا', 'سولفيني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(202, 'SB', 'Solomon Islands', 'Solomon Island', 'جزر سليمان', 'جزر سليمان', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(203, 'SO', 'Somalia', 'Somali', 'الصومال', 'صومالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(204, 'ZA', 'South Africa', 'South African', 'جنوب أفريقيا', 'أفريقي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(205, 'GS', 'South Georgia and the South Sandwich', 'South Georgia and the South Sandwich', 'المنطقة القطبية الجنوبية', 'لمنطقة القطبية الجنوبية', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(206, 'SS', 'South Sudan', 'South Sudanese', 'السودان الجنوبي', 'سوادني جنوبي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(207, 'ES', 'Spain', 'Spanish', 'إسبانيا', 'إسباني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(208, 'SH', 'Saint Helena', 'St. Helenian', 'سانت هيلانة', 'هيلاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(209, 'SD', 'Sudan', 'Sudanese', 'السودان', 'سوداني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(210, 'SR', 'Suriname', 'Surinamese', 'سورينام', 'سورينامي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(211, 'SJ', 'Svalbard and Jan Mayen', 'Svalbardian/Jan Mayenian', 'سفالبارد ويان ماين', 'سفالبارد ويان ماين', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(212, 'SZ', 'Swaziland', 'Swazi', 'سوازيلند', 'سوازيلندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(213, 'SE', 'Sweden', 'Swedish', 'السويد', 'سويدي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(214, 'CH', 'Switzerland', 'Swiss', 'سويسرا', 'سويسري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(215, 'SY', 'Syria', 'Syrian', 'سوريا', 'سوري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(216, 'TW', 'Taiwan', 'Taiwanese', 'تايوان', 'تايواني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(217, 'TJ', 'Tajikistan', 'Tajikistani', 'طاجيكستان', 'طاجيكستاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(218, 'TZ', 'Tanzania', 'Tanzanian', 'تنزانيا', 'تنزانيي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(219, 'TH', 'Thailand', 'Thai', 'تايلندا', 'تايلندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(220, 'TL', 'Timor-Leste', 'Timor-Lestian', 'تيمور الشرقية', 'تيموري', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(221, 'TG', 'Togo', 'Togolese', 'توغو', 'توغي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(222, 'TK', 'Tokelau', 'Tokelaian', 'توكيلاو', 'توكيلاوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(223, 'TO', 'Tonga', 'Tongan', 'تونغا', 'تونغي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(224, 'TT', 'Trinidad and Tobago', 'Trinidadian/Tobagonian', 'ترينيداد وتوباغو', 'ترينيداد وتوباغو', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(225, 'TN', 'Tunisia', 'Tunisian', 'تونس', 'تونسي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(226, 'TR', 'Turkey', 'Turkish', 'تركيا', 'تركي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(227, 'TM', 'Turkmenistan', 'Turkmen', 'تركمانستان', 'تركمانستاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(228, 'TC', 'Turks and Caicos Islands', 'Turks and Caicos Islands', 'جزر توركس وكايكوس', 'جزر توركس وكايكوس', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(229, 'TV', 'Tuvalu', 'Tuvaluan', 'توفالو', 'توفالي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(230, 'UG', 'Uganda', 'Ugandan', 'أوغندا', 'أوغندي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(231, 'UA', 'Ukraine', 'Ukrainian', 'أوكرانيا', 'أوكراني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(232, 'AE', 'United Arab Emirates', 'Emirati', 'الإمارات العربية المتحدة', 'إماراتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(233, 'GB', 'United Kingdom', 'British', 'المملكة المتحدة', 'بريطاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(234, 'US', 'United States', 'American', 'الولايات المتحدة', 'أمريكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(235, 'UM', 'US Minor Outlying Islands', 'US Minor Outlying Islander', 'قائمة الولايات والمناطق الأمريكية', 'أمريكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(236, 'UY', 'Uruguay', 'Uruguayan', 'أورغواي', 'أورغواي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(237, 'UZ', 'Uzbekistan', 'Uzbek', 'أوزباكستان', 'أوزباكستاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(238, 'VU', 'Vanuatu', 'Vanuatuan', 'فانواتو', 'فانواتي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(239, 'VE', 'Venezuela', 'Venezuelan', 'فنزويلا', 'فنزويلي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(240, 'VN', 'Vietnam', 'Vietnamese', 'فيتنام', 'فيتنامي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(241, 'VI', 'Virgin Islands (U.S.)', 'American Virgin Islander', 'الجزر العذراء الأمريكي', 'أمريكي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(242, 'VA', 'Vatican City', 'Vatican', 'فنزويلا', 'فاتيكاني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(243, 'WF', 'Wallis and Futuna Islands', 'Wallisian/Futunan', 'والس وفوتونا', 'فوتوني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(244, 'EH', 'Western Sahara', 'Sahrawian', 'الصحراء الغربية', 'صحراوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(245, 'YE', 'Yemen', 'Yemeni', 'اليمن', 'يمني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(246, 'ZM', 'Zambia', 'Zambian', 'زامبيا', 'زامبياني', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(247, 'ZW', 'Zimbabwe', 'Zimbabwean', 'زمبابوي', 'زمبابوي', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `countries` (`id`, `country_code`, `country_name_en`, `country_nationality_en`, `country_name_ar`, `country_nationality_ar`) VALUES
+(1, 'AF', 'Afghanistan', 'Afghan', 'أفغانستان', 'أفغانستاني'),
+(2, 'AL', 'Albania', 'Albanian', 'ألبانيا', 'ألباني'),
+(3, 'AX', 'Aland Islands', 'Aland Islander', 'جزر آلاند', 'آلاندي'),
+(4, 'DZ', 'Algeria', 'Algerian', 'الجزائر', 'جزائري'),
+(5, 'AS', 'American Samoa', 'American Samoan', 'ساموا-الأمريكي', 'أمريكي سامواني'),
+(6, 'AD', 'Andorra', 'Andorran', 'أندورا', 'أندوري'),
+(7, 'AO', 'Angola', 'Angolan', 'أنغولا', 'أنقولي'),
+(8, 'AI', 'Anguilla', 'Anguillan', 'أنغويلا', 'أنغويلي'),
+(9, 'AQ', 'Antarctica', 'Antarctican', 'أنتاركتيكا', 'أنتاركتيكي'),
+(10, 'AG', 'Antigua and Barbuda', 'Antiguan', 'أنتيغوا وبربودا', 'بربودي'),
+(11, 'AR', 'Argentina', 'Argentinian', 'الأرجنتين', 'أرجنتيني'),
+(12, 'AM', 'Armenia', 'Armenian', 'أرمينيا', 'أرميني'),
+(13, 'AW', 'Aruba', 'Aruban', 'أروبه', 'أوروبهيني'),
+(14, 'AU', 'Australia', 'Australian', 'أستراليا', 'أسترالي'),
+(15, 'AT', 'Austria', 'Austrian', 'النمسا', 'نمساوي'),
+(16, 'AZ', 'Azerbaijan', 'Azerbaijani', 'أذربيجان', 'أذربيجاني'),
+(17, 'BS', 'Bahamas', 'Bahamian', 'الباهاماس', 'باهاميسي'),
+(18, 'BH', 'Bahrain', 'Bahraini', 'البحرين', 'بحريني'),
+(19, 'BD', 'Bangladesh', 'Bangladeshi', 'بنغلاديش', 'بنغلاديشي'),
+(20, 'BB', 'Barbados', 'Barbadian', 'بربادوس', 'بربادوسي'),
+(21, 'BY', 'Belarus', 'Belarusian', 'روسيا البيضاء', 'روسي'),
+(22, 'BE', 'Belgium', 'Belgian', 'بلجيكا', 'بلجيكي'),
+(23, 'BZ', 'Belize', 'Belizean', 'بيليز', 'بيليزي'),
+(24, 'BJ', 'Benin', 'Beninese', 'بنين', 'بنيني'),
+(25, 'BL', 'Saint Barthelemy', 'Saint Barthelmian', 'سان بارتيلمي', 'سان بارتيلمي'),
+(26, 'BM', 'Bermuda', 'Bermudan', 'جزر برمودا', 'برمودي'),
+(27, 'BT', 'Bhutan', 'Bhutanese', 'بوتان', 'بوتاني'),
+(28, 'BO', 'Bolivia', 'Bolivian', 'بوليفيا', 'بوليفي'),
+(29, 'BA', 'Bosnia and Herzegovina', 'Bosnian / Herzegovinian', 'البوسنة و الهرسك', 'بوسني/هرسكي'),
+(30, 'BW', 'Botswana', 'Botswanan', 'بوتسوانا', 'بوتسواني'),
+(31, 'BV', 'Bouvet Island', 'Bouvetian', 'جزيرة بوفيه', 'بوفيهي'),
+(32, 'BR', 'Brazil', 'Brazilian', 'البرازيل', 'برازيلي'),
+(33, 'IO', 'British Indian Ocean Territory', 'British Indian Ocean Territory', 'إقليم المحيط الهندي البريطاني', 'إقليم المحيط الهندي البريطاني'),
+(34, 'BN', 'Brunei Darussalam', 'Bruneian', 'بروني', 'بروني'),
+(35, 'BG', 'Bulgaria', 'Bulgarian', 'بلغاريا', 'بلغاري'),
+(36, 'BF', 'Burkina Faso', 'Burkinabe', 'بوركينا فاسو', 'بوركيني'),
+(37, 'BI', 'Burundi', 'Burundian', 'بوروندي', 'بورونيدي'),
+(38, 'KH', 'Cambodia', 'Cambodian', 'كمبوديا', 'كمبودي'),
+(39, 'CM', 'Cameroon', 'Cameroonian', 'كاميرون', 'كاميروني'),
+(40, 'CA', 'Canada', 'Canadian', 'كندا', 'كندي'),
+(41, 'CV', 'Cape Verde', 'Cape Verdean', 'الرأس الأخضر', 'الرأس الأخضر'),
+(42, 'KY', 'Cayman Islands', 'Caymanian', 'جزر كايمان', 'كايماني'),
+(43, 'CF', 'Central African Republic', 'Central African', 'جمهورية أفريقيا الوسطى', 'أفريقي'),
+(44, 'TD', 'Chad', 'Chadian', 'تشاد', 'تشادي'),
+(45, 'CL', 'Chile', 'Chilean', 'شيلي', 'شيلي'),
+(46, 'CN', 'China', 'Chinese', 'الصين', 'صيني'),
+(47, 'CX', 'Christmas Island', 'Christmas Islander', 'جزيرة عيد الميلاد', 'جزيرة عيد الميلاد'),
+(48, 'CC', 'Cocos (Keeling) Islands', 'Cocos Islander', 'جزر كوكوس', 'جزر كوكوس'),
+(49, 'CO', 'Colombia', 'Colombian', 'كولومبيا', 'كولومبي'),
+(50, 'KM', 'Comoros', 'Comorian', 'جزر القمر', 'جزر القمر'),
+(51, 'CG', 'Congo', 'Congolese', 'الكونغو', 'كونغي'),
+(52, 'CK', 'Cook Islands', 'Cook Islander', 'جزر كوك', 'جزر كوك'),
+(53, 'CR', 'Costa Rica', 'Costa Rican', 'كوستاريكا', 'كوستاريكي'),
+(54, 'HR', 'Croatia', 'Croatian', 'كرواتيا', 'كوراتي'),
+(55, 'CU', 'Cuba', 'Cuban', 'كوبا', 'كوبي'),
+(56, 'CY', 'Cyprus', 'Cypriot', 'قبرص', 'قبرصي'),
+(57, 'CW', 'Curaçao', 'Curacian', 'كوراساو', 'كوراساوي'),
+(58, 'CZ', 'Czech Republic', 'Czech', 'الجمهورية التشيكية', 'تشيكي'),
+(59, 'DK', 'Denmark', 'Danish', 'الدانمارك', 'دنماركي'),
+(60, 'DJ', 'Djibouti', 'Djiboutian', 'جيبوتي', 'جيبوتي'),
+(61, 'DM', 'Dominica', 'Dominican', 'دومينيكا', 'دومينيكي'),
+(62, 'DO', 'Dominican Republic', 'Dominican', 'الجمهورية الدومينيكية', 'دومينيكي'),
+(63, 'EC', 'Ecuador', 'Ecuadorian', 'إكوادور', 'إكوادوري'),
+(64, 'EG', 'Egypt', 'Egyptian', 'مصر', 'مصري'),
+(65, 'SV', 'El Salvador', 'Salvadoran', 'إلسلفادور', 'سلفادوري'),
+(66, 'GQ', 'Equatorial Guinea', 'Equatorial Guinean', 'غينيا الاستوائي', 'غيني'),
+(67, 'ER', 'Eritrea', 'Eritrean', 'إريتريا', 'إريتيري'),
+(68, 'EE', 'Estonia', 'Estonian', 'استونيا', 'استوني'),
+(69, 'ET', 'Ethiopia', 'Ethiopian', 'أثيوبيا', 'أثيوبي'),
+(70, 'FK', 'Falkland Islands (Malvinas)', 'Falkland Islander', 'جزر فوكلاند', 'فوكلاندي'),
+(71, 'FO', 'Faroe Islands', 'Faroese', 'جزر فارو', 'جزر فارو'),
+(72, 'FJ', 'Fiji', 'Fijian', 'فيجي', 'فيجي'),
+(73, 'FI', 'Finland', 'Finnish', 'فنلندا', 'فنلندي'),
+(74, 'FR', 'France', 'French', 'فرنسا', 'فرنسي'),
+(75, 'GF', 'French Guiana', 'French Guianese', 'غويانا الفرنسية', 'غويانا الفرنسية'),
+(76, 'PF', 'French Polynesia', 'French Polynesian', 'بولينيزيا الفرنسية', 'بولينيزيي'),
+(77, 'TF', 'French Southern and Antarctic Lands', 'French', 'أراض فرنسية جنوبية وأنتارتيكية', 'أراض فرنسية جنوبية وأنتارتيكية'),
+(78, 'GA', 'Gabon', 'Gabonese', 'الغابون', 'غابوني'),
+(79, 'GM', 'Gambia', 'Gambian', 'غامبيا', 'غامبي'),
+(80, 'GE', 'Georgia', 'Georgian', 'جيورجيا', 'جيورجي'),
+(81, 'DE', 'Germany', 'German', 'ألمانيا', 'ألماني'),
+(82, 'GH', 'Ghana', 'Ghanaian', 'غانا', 'غاني'),
+(83, 'GI', 'Gibraltar', 'Gibraltar', 'جبل طارق', 'جبل طارق'),
+(84, 'GG', 'Guernsey', 'Guernsian', 'غيرنزي', 'غيرنزي'),
+(85, 'GR', 'Greece', 'Greek', 'اليونان', 'يوناني'),
+(86, 'GL', 'Greenland', 'Greenlandic', 'جرينلاند', 'جرينلاندي'),
+(87, 'GD', 'Grenada', 'Grenadian', 'غرينادا', 'غرينادي'),
+(88, 'GP', 'Guadeloupe', 'Guadeloupe', 'جزر جوادلوب', 'جزر جوادلوب'),
+(89, 'GU', 'Guam', 'Guamanian', 'جوام', 'جوامي'),
+(90, 'GT', 'Guatemala', 'Guatemalan', 'غواتيمال', 'غواتيمالي'),
+(91, 'GN', 'Guinea', 'Guinean', 'غينيا', 'غيني'),
+(92, 'GW', 'Guinea-Bissau', 'Guinea-Bissauan', 'غينيا-بيساو', 'غيني'),
+(93, 'GY', 'Guyana', 'Guyanese', 'غيانا', 'غياني'),
+(94, 'HT', 'Haiti', 'Haitian', 'هايتي', 'هايتي'),
+(95, 'HM', 'Heard and Mc Donald Islands', 'Heard and Mc Donald Islanders', 'جزيرة هيرد وجزر ماكدونالد', 'جزيرة هيرد وجزر ماكدونالد'),
+(96, 'HN', 'Honduras', 'Honduran', 'هندوراس', 'هندوراسي'),
+(97, 'HK', 'Hong Kong', 'Hongkongese', 'هونغ كونغ', 'هونغ كونغي'),
+(98, 'HU', 'Hungary', 'Hungarian', 'المجر', 'مجري'),
+(99, 'IS', 'Iceland', 'Icelandic', 'آيسلندا', 'آيسلندي'),
+(100, 'IN', 'India', 'Indian', 'الهند', 'هندي'),
+(101, 'IM', 'Isle of Man', 'Manx', 'جزيرة مان', 'ماني'),
+(102, 'ID', 'Indonesia', 'Indonesian', 'أندونيسيا', 'أندونيسيي'),
+(103, 'IR', 'Iran', 'Iranian', 'إيران', 'إيراني'),
+(104, 'IQ', 'Iraq', 'Iraqi', 'العراق', 'عراقي'),
+(105, 'IE', 'Ireland', 'Irish', 'إيرلندا', 'إيرلندي'),
+(106, 'IL', 'Israel', 'Israeli', 'إسرائيل', 'إسرائيلي'),
+(107, 'IT', 'Italy', 'Italian', 'إيطاليا', 'إيطالي'),
+(108, 'CI', 'Ivory Coast', 'Ivory Coastian', 'ساحل العاج', 'ساحل العاج'),
+(109, 'JE', 'Jersey', 'Jersian', 'جيرزي', 'جيرزي'),
+(110, 'JM', 'Jamaica', 'Jamaican', 'جمايكا', 'جمايكي'),
+(111, 'JP', 'Japan', 'Japanese', 'اليابان', 'ياباني'),
+(112, 'JO', 'Jordan', 'Jordanian', 'الأردن', 'أردني'),
+(113, 'KZ', 'Kazakhstan', 'Kazakh', 'كازاخستان', 'كازاخستاني'),
+(114, 'KE', 'Kenya', 'Kenyan', 'كينيا', 'كيني'),
+(115, 'KI', 'Kiribati', 'I-Kiribati', 'كيريباتي', 'كيريباتي'),
+(116, 'KP', 'Korea(North Korea)', 'North Korean', 'كوريا الشمالية', 'كوري'),
+(117, 'KR', 'Korea(South Korea)', 'South Korean', 'كوريا الجنوبية', 'كوري'),
+(118, 'XK', 'Kosovo', 'Kosovar', 'كوسوفو', 'كوسيفي'),
+(119, 'KW', 'Kuwait', 'Kuwaiti', 'الكويت', 'كويتي'),
+(120, 'KG', 'Kyrgyzstan', 'Kyrgyzstani', 'قيرغيزستان', 'قيرغيزستاني'),
+(121, 'LA', 'Lao PDR', 'Laotian', 'لاوس', 'لاوسي'),
+(122, 'LV', 'Latvia', 'Latvian', 'لاتفيا', 'لاتيفي'),
+(123, 'LB', 'Lebanon', 'Lebanese', 'لبنان', 'لبناني'),
+(124, 'LS', 'Lesotho', 'Basotho', 'ليسوتو', 'ليوسيتي'),
+(125, 'LR', 'Liberia', 'Liberian', 'ليبيريا', 'ليبيري'),
+(126, 'LY', 'Libya', 'Libyan', 'ليبيا', 'ليبي'),
+(127, 'LI', 'Liechtenstein', 'Liechtenstein', 'ليختنشتين', 'ليختنشتيني'),
+(128, 'LT', 'Lithuania', 'Lithuanian', 'لتوانيا', 'لتوانيي'),
+(129, 'LU', 'Luxembourg', 'Luxembourger', 'لوكسمبورغ', 'لوكسمبورغي'),
+(130, 'LK', 'Sri Lanka', 'Sri Lankian', 'سريلانكا', 'سريلانكي'),
+(131, 'MO', 'Macau', 'Macanese', 'ماكاو', 'ماكاوي'),
+(132, 'MK', 'Macedonia', 'Macedonian', 'مقدونيا', 'مقدوني'),
+(133, 'MG', 'Madagascar', 'Malagasy', 'مدغشقر', 'مدغشقري'),
+(134, 'MW', 'Malawi', 'Malawian', 'مالاوي', 'مالاوي'),
+(135, 'MY', 'Malaysia', 'Malaysian', 'ماليزيا', 'ماليزي'),
+(136, 'MV', 'Maldives', 'Maldivian', 'المالديف', 'مالديفي'),
+(137, 'ML', 'Mali', 'Malian', 'مالي', 'مالي'),
+(138, 'MT', 'Malta', 'Maltese', 'مالطا', 'مالطي'),
+(139, 'MH', 'Marshall Islands', 'Marshallese', 'جزر مارشال', 'مارشالي'),
+(140, 'MQ', 'Martinique', 'Martiniquais', 'مارتينيك', 'مارتينيكي'),
+(141, 'MR', 'Mauritania', 'Mauritanian', 'موريتانيا', 'موريتانيي'),
+(142, 'MU', 'Mauritius', 'Mauritian', 'موريشيوس', 'موريشيوسي'),
+(143, 'YT', 'Mayotte', 'Mahoran', 'مايوت', 'مايوتي'),
+(144, 'MX', 'Mexico', 'Mexican', 'المكسيك', 'مكسيكي'),
+(145, 'FM', 'Micronesia', 'Micronesian', 'مايكرونيزيا', 'مايكرونيزيي'),
+(146, 'MD', 'Moldova', 'Moldovan', 'مولدافيا', 'مولديفي'),
+(147, 'MC', 'Monaco', 'Monacan', 'موناكو', 'مونيكي'),
+(148, 'MN', 'Mongolia', 'Mongolian', 'منغوليا', 'منغولي'),
+(149, 'ME', 'Montenegro', 'Montenegrin', 'الجبل الأسود', 'الجبل الأسود'),
+(150, 'MS', 'Montserrat', 'Montserratian', 'مونتسيرات', 'مونتسيراتي'),
+(151, 'MA', 'Morocco', 'Moroccan', 'المغرب', 'مغربي'),
+(152, 'MZ', 'Mozambique', 'Mozambican', 'موزمبيق', 'موزمبيقي'),
+(153, 'MM', 'Myanmar', 'Myanmarian', 'ميانمار', 'ميانماري'),
+(154, 'NA', 'Namibia', 'Namibian', 'ناميبيا', 'ناميبي'),
+(155, 'NR', 'Nauru', 'Nauruan', 'نورو', 'نوري'),
+(156, 'NP', 'Nepal', 'Nepalese', 'نيبال', 'نيبالي'),
+(157, 'NL', 'Netherlands', 'Dutch', 'هولندا', 'هولندي'),
+(158, 'AN', 'Netherlands Antilles', 'Dutch Antilier', 'جزر الأنتيل الهولندي', 'هولندي'),
+(159, 'NC', 'New Caledonia', 'New Caledonian', 'كاليدونيا الجديدة', 'كاليدوني'),
+(160, 'NZ', 'New Zealand', 'New Zealander', 'نيوزيلندا', 'نيوزيلندي'),
+(161, 'NI', 'Nicaragua', 'Nicaraguan', 'نيكاراجوا', 'نيكاراجوي'),
+(162, 'NE', 'Niger', 'Nigerien', 'النيجر', 'نيجيري'),
+(163, 'NG', 'Nigeria', 'Nigerian', 'نيجيريا', 'نيجيري'),
+(164, 'NU', 'Niue', 'Niuean', 'ني', 'ني'),
+(165, 'NF', 'Norfolk Island', 'Norfolk Islander', 'جزيرة نورفولك', 'نورفوليكي'),
+(166, 'MP', 'Northern Mariana Islands', 'Northern Marianan', 'جزر ماريانا الشمالية', 'ماريني'),
+(167, 'NO', 'Norway', 'Norwegian', 'النرويج', 'نرويجي'),
+(168, 'OM', 'Oman', 'Omani', 'عمان', 'عماني'),
+(169, 'PK', 'Pakistan', 'Pakistani', 'باكستان', 'باكستاني'),
+(170, 'PW', 'Palau', 'Palauan', 'بالاو', 'بالاوي'),
+(171, 'PS', 'Palestine', 'Palestinian', 'فلسطين', 'فلسطيني'),
+(172, 'PA', 'Panama', 'Panamanian', 'بنما', 'بنمي'),
+(173, 'PG', 'Papua New Guinea', 'Papua New Guinean', 'بابوا غينيا الجديدة', 'بابوي'),
+(174, 'PY', 'Paraguay', 'Paraguayan', 'باراغواي', 'بارغاوي'),
+(175, 'PE', 'Peru', 'Peruvian', 'بيرو', 'بيري'),
+(176, 'PH', 'Philippines', 'Filipino', 'الفليبين', 'فلبيني'),
+(177, 'PN', 'Pitcairn', 'Pitcairn Islander', 'بيتكيرن', 'بيتكيرني'),
+(178, 'PL', 'Poland', 'Polish', 'بولونيا', 'بوليني'),
+(179, 'PT', 'Portugal', 'Portuguese', 'البرتغال', 'برتغالي'),
+(180, 'PR', 'Puerto Rico', 'Puerto Rican', 'بورتو ريكو', 'بورتي'),
+(181, 'QA', 'Qatar', 'Qatari', 'قطر', 'قطري'),
+(182, 'RE', 'Reunion Island', 'Reunionese', 'ريونيون', 'ريونيوني'),
+(183, 'RO', 'Romania', 'Romanian', 'رومانيا', 'روماني'),
+(184, 'RU', 'Russian', 'Russian', 'روسيا', 'روسي'),
+(185, 'RW', 'Rwanda', 'Rwandan', 'رواندا', 'رواندا'),
+(186, 'KN', 'Saint Kitts and Nevis', 'Kittitian/Nevisian', 'سانت كيتس ونيفس,', 'سانت كيتس ونيفس'),
+(187, 'MF', 'Saint Martin (French part)', 'St. Martian(French)', 'ساينت مارتن فرنسي', 'ساينت مارتني فرنسي'),
+(188, 'SX', 'Sint Maarten (Dutch part)', 'St. Martian(Dutch)', 'ساينت مارتن هولندي', 'ساينت مارتني هولندي'),
+(189, 'LC', 'Saint Pierre and Miquelon', 'St. Pierre and Miquelon', 'سان بيير وميكلون', 'سان بيير وميكلوني'),
+(190, 'VC', 'Saint Vincent and the Grenadines', 'Saint Vincent and the Grenadines', 'سانت فنسنت وجزر غرينادين', 'سانت فنسنت وجزر غرينادين'),
+(191, 'WS', 'Samoa', 'Samoan', 'ساموا', 'ساموي'),
+(192, 'SM', 'San Marino', 'Sammarinese', 'سان مارينو', 'ماريني'),
+(193, 'ST', 'Sao Tome and Principe', 'Sao Tomean', 'ساو تومي وبرينسيبي', 'ساو تومي وبرينسيبي'),
+(194, 'SA', 'Saudi Arabia', 'Saudi Arabian', 'المملكة العربية السعودية', 'سعودي'),
+(195, 'SN', 'Senegal', 'Senegalese', 'السنغال', 'سنغالي'),
+(196, 'RS', 'Serbia', 'Serbian', 'صربيا', 'صربي'),
+(197, 'SC', 'Seychelles', 'Seychellois', 'سيشيل', 'سيشيلي'),
+(198, 'SL', 'Sierra Leone', 'Sierra Leonean', 'سيراليون', 'سيراليوني'),
+(199, 'SG', 'Singapore', 'Singaporean', 'سنغافورة', 'سنغافوري'),
+(200, 'SK', 'Slovakia', 'Slovak', 'سلوفاكيا', 'سولفاكي'),
+(201, 'SI', 'Slovenia', 'Slovenian', 'سلوفينيا', 'سولفيني'),
+(202, 'SB', 'Solomon Islands', 'Solomon Island', 'جزر سليمان', 'جزر سليمان'),
+(203, 'SO', 'Somalia', 'Somali', 'الصومال', 'صومالي'),
+(204, 'ZA', 'South Africa', 'South African', 'جنوب أفريقيا', 'أفريقي'),
+(205, 'GS', 'South Georgia and the South Sandwich', 'South Georgia and the South Sandwich', 'المنطقة القطبية الجنوبية', 'لمنطقة القطبية الجنوبية'),
+(206, 'SS', 'South Sudan', 'South Sudanese', 'السودان الجنوبي', 'سوادني جنوبي'),
+(207, 'ES', 'Spain', 'Spanish', 'إسبانيا', 'إسباني'),
+(208, 'SH', 'Saint Helena', 'St. Helenian', 'سانت هيلانة', 'هيلاني'),
+(209, 'SD', 'Sudan', 'Sudanese', 'السودان', 'سوداني'),
+(210, 'SR', 'Suriname', 'Surinamese', 'سورينام', 'سورينامي'),
+(211, 'SJ', 'Svalbard and Jan Mayen', 'Svalbardian/Jan Mayenian', 'سفالبارد ويان ماين', 'سفالبارد ويان ماين'),
+(212, 'SZ', 'Swaziland', 'Swazi', 'سوازيلند', 'سوازيلندي'),
+(213, 'SE', 'Sweden', 'Swedish', 'السويد', 'سويدي'),
+(214, 'CH', 'Switzerland', 'Swiss', 'سويسرا', 'سويسري'),
+(215, 'SY', 'Syria', 'Syrian', 'سوريا', 'سوري'),
+(216, 'TW', 'Taiwan', 'Taiwanese', 'تايوان', 'تايواني'),
+(217, 'TJ', 'Tajikistan', 'Tajikistani', 'طاجيكستان', 'طاجيكستاني'),
+(218, 'TZ', 'Tanzania', 'Tanzanian', 'تنزانيا', 'تنزانيي'),
+(219, 'TH', 'Thailand', 'Thai', 'تايلندا', 'تايلندي'),
+(220, 'TL', 'Timor-Leste', 'Timor-Lestian', 'تيمور الشرقية', 'تيموري'),
+(221, 'TG', 'Togo', 'Togolese', 'توغو', 'توغي'),
+(222, 'TK', 'Tokelau', 'Tokelaian', 'توكيلاو', 'توكيلاوي'),
+(223, 'TO', 'Tonga', 'Tongan', 'تونغا', 'تونغي'),
+(224, 'TT', 'Trinidad and Tobago', 'Trinidadian/Tobagonian', 'ترينيداد وتوباغو', 'ترينيداد وتوباغو'),
+(225, 'TN', 'Tunisia', 'Tunisian', 'تونس', 'تونسي'),
+(226, 'TR', 'Turkey', 'Turkish', 'تركيا', 'تركي'),
+(227, 'TM', 'Turkmenistan', 'Turkmen', 'تركمانستان', 'تركمانستاني'),
+(228, 'TC', 'Turks and Caicos Islands', 'Turks and Caicos Islands', 'جزر توركس وكايكوس', 'جزر توركس وكايكوس'),
+(229, 'TV', 'Tuvalu', 'Tuvaluan', 'توفالو', 'توفالي'),
+(230, 'UG', 'Uganda', 'Ugandan', 'أوغندا', 'أوغندي'),
+(231, 'UA', 'Ukraine', 'Ukrainian', 'أوكرانيا', 'أوكراني'),
+(232, 'AE', 'United Arab Emirates', 'Emirati', 'الإمارات العربية المتحدة', 'إماراتي'),
+(233, 'GB', 'United Kingdom', 'British', 'المملكة المتحدة', 'بريطاني'),
+(234, 'US', 'United States', 'American', 'الولايات المتحدة', 'أمريكي'),
+(235, 'UM', 'US Minor Outlying Islands', 'US Minor Outlying Islander', 'قائمة الولايات والمناطق الأمريكية', 'أمريكي'),
+(236, 'UY', 'Uruguay', 'Uruguayan', 'أورغواي', 'أورغواي'),
+(237, 'UZ', 'Uzbekistan', 'Uzbek', 'أوزباكستان', 'أوزباكستاني'),
+(238, 'VU', 'Vanuatu', 'Vanuatuan', 'فانواتو', 'فانواتي'),
+(239, 'VE', 'Venezuela', 'Venezuelan', 'فنزويلا', 'فنزويلي'),
+(240, 'VN', 'Vietnam', 'Vietnamese', 'فيتنام', 'فيتنامي'),
+(241, 'VI', 'Virgin Islands (U.S.)', 'American Virgin Islander', 'الجزر العذراء الأمريكي', 'أمريكي'),
+(242, 'VA', 'Vatican City', 'Vatican', 'فنزويلا', 'فاتيكاني'),
+(243, 'WF', 'Wallis and Futuna Islands', 'Wallisian/Futunan', 'والس وفوتونا', 'فوتوني'),
+(244, 'EH', 'Western Sahara', 'Sahrawian', 'الصحراء الغربية', 'صحراوي'),
+(245, 'YE', 'Yemen', 'Yemeni', 'اليمن', 'يمني'),
+(246, 'ZM', 'Zambia', 'Zambian', 'زامبيا', 'زامبياني'),
+(247, 'ZW', 'Zimbabwe', 'Zimbabwean', 'زمبابوي', 'زمبابوي');
 
 -- --------------------------------------------------------
 
@@ -477,7 +476,7 @@ CREATE TABLE `make_years` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `year` year(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -488,37 +487,37 @@ CREATE TABLE `make_years` (
 -- Dumping data for table `make_years`
 --
 
-INSERT INTO `make_years` (`id`, `year`, `created_at`, `updated_at`) VALUES
-(1, 1990, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 1991, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 1992, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(4, 1993, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 1994, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(6, 1995, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(7, 1996, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(8, 1997, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(9, 1998, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 1999, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(11, 2000, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(12, 2001, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(13, 2002, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(14, 2003, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(15, 2004, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(16, 2005, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(17, 2006, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(18, 2007, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(19, 2008, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(20, 2009, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(21, 2010, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(22, 2011, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(23, 2012, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(24, 2013, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(25, 2014, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(26, 2015, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(27, 2016, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(28, 2017, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(29, 2018, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(30, 2019, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `make_years` (`id`, `year`) VALUES
+(1, 1990),
+(2, 1991),
+(3, 1992),
+(4, 1993),
+(5, 1994),
+(6, 1995),
+(7, 1996),
+(8, 1997),
+(9, 1998),
+(10, 1999),
+(11, 2000),
+(12, 2001),
+(13, 2002),
+(14, 2003),
+(15, 2004),
+(16, 2005),
+(17, 2006),
+(18, 2007),
+(19, 2008),
+(20, 2009),
+(21, 2010),
+(22, 2011),
+(23, 2012),
+(24, 2013),
+(25, 2014),
+(26, 2015),
+(27, 2016),
+(28, 2017),
+(29, 2018),
+(30, 2019);
 
 -- --------------------------------------------------------
 
@@ -533,7 +532,7 @@ CREATE TABLE `manufacturers` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `manufacturer` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -544,36 +543,36 @@ CREATE TABLE `manufacturers` (
 -- Dumping data for table `manufacturers`
 --
 
-INSERT INTO `manufacturers` (`id`, `manufacturer`, `created_at`, `updated_at`) VALUES
-(1, 'Acura', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'Alfa Romeo', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 'Aston Martin', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(4, 'Audi', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 'Bentley', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(6, 'BMW', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(7, 'Bugatti', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(8, 'Buick', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(9, 'Cadillac', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 'Chevrolet', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(11, 'Chrysler', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(12, 'Dodge', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(13, 'Ford', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(14, 'GMC', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(15, 'Honda', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(16, 'Hyundai', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(17, 'Infiniti', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(18, 'Jeep', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(19, 'Kia', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(20, 'Lexus', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(21, 'Mazda', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(22, 'Mercedes-Benz', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(23, 'Mitsubishi', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(24, 'Porsche', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(25, 'Nissan', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(26, 'Subaru', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(27, 'Tesla', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(28, 'Toyota', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(29, 'Volkswagen', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `manufacturers` (`id`, `manufacturer`) VALUES
+(1, 'Acura'),
+(2, 'Alfa Romeo'),
+(3, 'Aston Martin'),
+(4, 'Audi'),
+(5, 'Bentley'),
+(6, 'BMW'),
+(7, 'Bugatti'),
+(8, 'Buick'),
+(9, 'Cadillac'),
+(10, 'Chevrolet'),
+(11, 'Chrysler'),
+(12, 'Dodge'),
+(13, 'Ford'),
+(14, 'GMC'),
+(15, 'Honda'),
+(16, 'Hyundai'),
+(17, 'Infiniti'),
+(18, 'Jeep'),
+(19, 'Kia'),
+(20, 'Lexus'),
+(21, 'Mazda'),
+(22, 'Mercedes-Benz'),
+(23, 'Mitsubishi'),
+(24, 'Porsche'),
+(25, 'Nissan'),
+(26, 'Subaru'),
+(27, 'Tesla'),
+(28, 'Toyota'),
+(29, 'Volkswagen');
 
 -- --------------------------------------------------------
 
@@ -588,7 +587,7 @@ CREATE TABLE `models` (
   `id` mediumint(8) UNSIGNED NOT NULL,
   `model` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -599,101 +598,101 @@ CREATE TABLE `models` (
 -- Dumping data for table `models`
 --
 
-INSERT INTO `models` (`id`, `model`, `created_at`, `updated_at`) VALUES
-(1, 'Chevy Sonic', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'Ford Fiesta', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(3, 'Honda Fit', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(4, 'Hyundai Accent', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 'Kia Rio', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(6, 'Mazda2', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(7, 'Mitsubishi Mirage', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(8, 'Nissan Versa', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(9, 'Toyota Yaris', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(10, 'Alpha Romeo C4', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(11, 'Ford Focus', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(12, 'Honda Civic', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(13, 'Hyundai Elantra', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(14, 'Mazda3', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(15, 'Mitsubishi Lancer', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(16, 'Subaru Impreza', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(17, 'Volkswagen Golf', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(18, 'Volkswagen Beetle', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(19, 'Chevy Malibu', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(20, 'Ford Fusion', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(21, 'Honda Accord', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(22, 'Hyundai Sonata', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(23, 'Kia Optima', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(24, 'Mazda6', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(25, 'Nissan Altima', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(26, 'Toyota Camry', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(27, 'Ford Taurus', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(28, 'Chevy Impala', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(29, 'Nissan Maxima', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(30, 'Toyota Avalon', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(31, 'Nissan Juke', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(32, 'Honda HR-V', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(33, 'Honda CR-V', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(34, 'Hyundai Tucson', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(35, 'Mazda CX-3', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(36, 'Jeep Patriot', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(37, 'Subaru Forester', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(38, 'Toyota RAV4', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(39, 'GMC Acadia', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(40, 'Dodge Tourney', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(41, 'Honda Pilot', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(42, 'Hyundai Santa Fe', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(43, 'Jeep Cherokee', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(44, 'Nissan Pathfinder', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(45, 'Dodge Grand Caravan', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(46, 'Honda Odyssey', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(47, 'Mazda5', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(48, 'Nissan Quest', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(49, 'Jeep Wrangler', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(50, 'Kia Sportage', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(51, 'Kia Sorento', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(52, 'Toyota Land Cruiser', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(53, 'Nissan Armada', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(54, 'Audi A4', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(55, 'Acura ILX', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(56, 'BMW 2 Series', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(57, 'BMW 3 Series', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(58, 'BMW 4 Series', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(59, 'Cadillac ATS', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(60, 'Infiniti Q50', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(61, 'Lexus IS', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(62, 'Mercedes-Benz C-Class', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(63, 'Audi A6', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(64, 'BMW 5 Series', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(65, 'Chrysler 200', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(66, 'Lexus GS', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(67, 'Audi A8', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(68, 'Lexus LS', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(69, 'Audi Q-Series', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(70, 'BMW X Series', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(71, 'Chevy Spark', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(72, 'Toyota Prius', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(73, 'Nissan Leaf', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(74, 'BMW i3', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(75, 'Audi R8', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(76, 'BMW M Series', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(77, 'Chevy Camaro', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(78, 'Chevy Corvette', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(79, 'Dodge Challenger', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(80, 'Dodge Charger', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(81, 'Ford Mustang', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(82, 'Nissan Z', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(83, 'Porsche 911', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(84, 'Chevy Colorado', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(85, 'Nissan Frontier', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(86, 'Toyota Tacoma', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(87, 'Chevy Silverado', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(88, 'GMC Sierra', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(89, 'Nissan Titan', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(90, 'Ford Transit', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(91, 'Aston Martin DB11', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(92, 'Bentley Mulsane', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(93, 'Bugatti Veyron', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(94, 'Tesla Model 3', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `models` (`id`, `model`) VALUES
+(1, 'Chevy Sonic'),
+(2, 'Ford Fiesta'),
+(3, 'Honda Fit'),
+(4, 'Hyundai Accent'),
+(5, 'Kia Rio'),
+(6, 'Mazda2'),
+(7, 'Mitsubishi Mirage'),
+(8, 'Nissan Versa'),
+(9, 'Toyota Yaris'),
+(10, 'Alpha Romeo C4'),
+(11, 'Ford Focus'),
+(12, 'Honda Civic'),
+(13, 'Hyundai Elantra'),
+(14, 'Mazda3'),
+(15, 'Mitsubishi Lancer'),
+(16, 'Subaru Impreza'),
+(17, 'Volkswagen Golf'),
+(18, 'Volkswagen Beetle'),
+(19, 'Chevy Malibu'),
+(20, 'Ford Fusion'),
+(21, 'Honda Accord'),
+(22, 'Hyundai Sonata'),
+(23, 'Kia Optima'),
+(24, 'Mazda6'),
+(25, 'Nissan Altima'),
+(26, 'Toyota Camry'),
+(27, 'Ford Taurus'),
+(28, 'Chevy Impala'),
+(29, 'Nissan Maxima'),
+(30, 'Toyota Avalon'),
+(31, 'Nissan Juke'),
+(32, 'Honda HR-V'),
+(33, 'Honda CR-V'),
+(34, 'Hyundai Tucson'),
+(35, 'Mazda CX-3'),
+(36, 'Jeep Patriot'),
+(37, 'Subaru Forester'),
+(38, 'Toyota RAV4'),
+(39, 'GMC Acadia'),
+(40, 'Dodge Tourney'),
+(41, 'Honda Pilot'),
+(42, 'Hyundai Santa Fe'),
+(43, 'Jeep Cherokee'),
+(44, 'Nissan Pathfinder'),
+(45, 'Dodge Grand Caravan'),
+(46, 'Honda Odyssey'),
+(47, 'Mazda5'),
+(48, 'Nissan Quest'),
+(49, 'Jeep Wrangler'),
+(50, 'Kia Sportage'),
+(51, 'Kia Sorento'),
+(52, 'Toyota Land Cruiser'),
+(53, 'Nissan Armada'),
+(54, 'Audi A4'),
+(55, 'Acura ILX'),
+(56, 'BMW 2 Series'),
+(57, 'BMW 3 Series'),
+(58, 'BMW 4 Series'),
+(59, 'Cadillac ATS'),
+(60, 'Infiniti Q50'),
+(61, 'Lexus IS'),
+(62, 'Mercedes-Benz C-Class'),
+(63, 'Audi A6'),
+(64, 'BMW 5 Series'),
+(65, 'Chrysler 200'),
+(66, 'Lexus GS'),
+(67, 'Audi A8'),
+(68, 'Lexus LS'),
+(69, 'Audi Q-Series'),
+(70, 'BMW X Series'),
+(71, 'Chevy Spark'),
+(72, 'Toyota Prius'),
+(73, 'Nissan Leaf'),
+(74, 'BMW i3'),
+(75, 'Audi R8'),
+(76, 'BMW M Series'),
+(77, 'Chevy Camaro'),
+(78, 'Chevy Corvette'),
+(79, 'Dodge Challenger'),
+(80, 'Dodge Charger'),
+(81, 'Ford Mustang'),
+(82, 'Nissan Z'),
+(83, 'Porsche 911'),
+(84, 'Chevy Colorado'),
+(85, 'Nissan Frontier'),
+(86, 'Toyota Tacoma'),
+(87, 'Chevy Silverado'),
+(88, 'GMC Sierra'),
+(89, 'Nissan Titan'),
+(90, 'Ford Transit'),
+(91, 'Aston Martin DB11'),
+(92, 'Bentley Mulsane'),
+(93, 'Bugatti Veyron'),
+(94, 'Tesla Model 3');
 
 -- --------------------------------------------------------
 
@@ -716,13 +715,6 @@ CREATE TABLE `most_popular_cars_report` (
 --       `cars` -> `id`
 --
 
---
--- Dumping data for table `most_popular_cars_report`
---
-
-INSERT INTO `most_popular_cars_report` (`id`, `car_id`, `reservations_count`) VALUES
-(3, 11, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -736,7 +728,7 @@ CREATE TABLE `payment_types` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `payment_type` char(4) COLLATE latin1_general_ci NOT NULL COMMENT 'Types:Cash, card',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -747,9 +739,9 @@ CREATE TABLE `payment_types` (
 -- Dumping data for table `payment_types`
 --
 
-INSERT INTO `payment_types` (`id`, `payment_type`, `created_at`, `updated_at`) VALUES
-(1, 'Cash', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'Card', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `payment_types` (`id`, `payment_type`) VALUES
+(1, 'Cash'),
+(2, 'Card');
 
 -- --------------------------------------------------------
 
@@ -778,7 +770,7 @@ CREATE TABLE `reservations` (
   `card_expiry_date` date DEFAULT NULL,
   `card_security_digits` char(60) COLLATE latin1_general_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -795,9 +787,9 @@ CREATE TABLE `reservations` (
 -- Dumping data for table `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `payment_type_id`, `country_id`, `card_provider_id`, `start_date`, `end_date`, `total_rental_cost`, `first_name`, `middle_name`, `last_name`, `address`, `CPR`, `phone_no`, `card_number`, `card_expiry_date`, `card_security_digits`, `created_at`, `updated_at`) VALUES
-(0000000004, 1, 18, NULL, '2018-06-20', '2018-06-25', '50.000', '', '', '', 'road 6846 block 654 bld 6799 manama', 93579217, '6135468', NULL, NULL, NULL, CURRENT_TIMESTAMP, '2018-06-09 09:35:38'),
-(0000000005, 1, 9, NULL, '2018-05-08', '2018-05-16', '200.000', '', '', '', '54251321rg 52', 3216546, '3213564684', NULL, NULL, NULL, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `reservations` (`id`, `payment_type_id`, `country_id`, `card_provider_id`, `start_date`, `end_date`, `total_rental_cost`, `first_name`, `middle_name`, `last_name`, `address`, `CPR`, `phone_no`, `card_number`, `card_expiry_date`, `card_security_digits`) VALUES
+(0000000004, 1, 18, NULL, '2018-06-20', '2018-06-25', '50.000', '', '', '', 'road 6846 block 654 bld 6799 manama', 93579217, '6135468', NULL, NULL, NULL),
+(0000000005, 1, 9, NULL, '2018-05-08', '2018-05-16', '200.000', '', '', '', '54251321rg 52', 3216546, '3213564684', NULL, NULL, NULL);
 
 --
 -- Triggers `reservations`
@@ -836,7 +828,7 @@ CREATE TABLE `reservation_accessories` (
   `reservation_id` int(10) UNSIGNED NOT NULL,
   `reserve_qty` tinyint(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -861,7 +853,7 @@ CREATE TABLE `reservation_cars` (
   `reservation_id` int(10) UNSIGNED NOT NULL,
   `car_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -871,14 +863,6 @@ CREATE TABLE `reservation_cars` (
 --   `car_id`
 --       `cars` -> `id`
 --
-
---
--- Dumping data for table `reservation_cars`
---
-
-INSERT INTO `reservation_cars` (`id`, `reservation_id`, `car_id`, `created_at`, `updated_at`) VALUES
-(4, 4, 11, CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(5, 5, 11, CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
 
 --
 -- Triggers `reservation_cars`
@@ -928,7 +912,7 @@ CREATE TABLE `roles` (
   `id` int(10) UNSIGNED NOT NULL,
   `role` char(5) COLLATE latin1_general_ci NOT NULL COMMENT 'default roles: admin, user',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -939,9 +923,9 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'admin', CURRENT_TIMESTAMP, '0000-00-00 00:00:00'),
-(2, 'user', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `roles` (`id`, `role`) VALUES
+(1, 'admin'),
+(2, 'user');
 
 -- --------------------------------------------------------
 
@@ -990,7 +974,7 @@ CREATE TABLE `users` (
   `middle_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `last_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -1001,8 +985,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `middle_name`, `last_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin@rental.test', 'admin', 'Fatima', 'A.', 'Alansari', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');
+INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `middle_name`, `last_name`) VALUES
+(1, 'admin@rental.test', 'admin', 'Fatima', 'A.', 'Alansari');
 
 --
 -- Triggers `users`
@@ -1041,7 +1025,7 @@ CREATE TABLE `user_roles` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `role_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -1056,8 +1040,8 @@ CREATE TABLE `user_roles` (
 -- Dumping data for table `user_roles`
 --
 
-INSERT INTO `user_roles` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO `user_roles` (`id`, `user_id`, `role_id`) VALUES
+(1, 1, 1);
 
 --
 -- Indexes for dumped tables

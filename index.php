@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Search Cars</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Car Search Results</title>
+        <link rel="stylesheet" href="css/table.css">
+        <link rel="stylesheet" href="css/pagination.css">
+    </head>
+    <body>
 <?php
-require_once 'Header.php';
+include_once 'Header.php';
 
 /*** MANUFACTURER ***/
-require_once 'models/Manufacturers.php';
+include_once 'models/Manufacturers.php';
 $manufacturers = new Manufacturers();
 $manufacturersList = $manufacturers->listAll();
 
 /*** CATEGORY ***/
-require_once 'models/Categories.php';
+include_once 'models/Categories.php';
 $categories = new Categories();
 $categoriesList = $categories->listAll();
 
 /*** MODEL ***/
-require_once 'models/Models.php';
+include_once 'models/Models.php';
 $models = new Models();
 $modelsList = $models->listAll();
 
 /*** MAKE YEARS ***/
-require_once 'models/Years.php';
+include_once 'models/Years.php';
 $years = new Years();
 $yearsList = $years->listAll();
 
 /*** PRICE RANGE ***/
-require_once 'models/Cars.php';
+include_once 'models/Cars.php';
 $cars = new Cars();
 $minPrice = $cars->minPrice();
 $maxPrice = $cars->maxPrice();
-
-
-
 ?>
-
         
 <div id="sidebar">
   <?php

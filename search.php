@@ -1,5 +1,14 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Car Search Results</title>
+        <link rel="stylesheet" href="css/table.css">
+        <link rel="stylesheet" href="css/pagination.css">
+    </head>
+    <body>
 <?php
+include_once 'Header.php';
 require_once 'models/Cars.php';
 $cars = new Cars();
 
@@ -80,17 +89,6 @@ if (isset($_GET['p'])) {
         $pages = 1;
     }
 }
-?>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Car Search Results</title>
-        <link rel="stylesheet" href="css/table.css">
-        <link rel="stylesheet" href="css/pagination.css">
-    </head>
-    <body>
-        <?php
-include_once 'Header.php';
 ?>
     <center>
         <div id="aboutsidebar" class="overflow">
